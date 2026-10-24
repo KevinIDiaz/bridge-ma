@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Doc upkeep reminder",
+      "trigger": "UserPromptSubmit",
+      "description": "Reminds the agent on every prompt to apply the Doc upkeep checklist in solo-workflow.md before finishing the turn.",
+      "action": {
+        "type": "agent",
+        "prompt": "Before ending this turn, apply the \"Doc upkeep\" checklist in .kiro/steering/solo-workflow.md. Record only what actually happened. End your reply with a line \"Docs updated: <files>\" or \"Docs updated: none needed\"."
+      }
+    }
+  ]
+}

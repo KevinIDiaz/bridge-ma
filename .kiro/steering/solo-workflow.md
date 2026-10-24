@@ -1,0 +1,20 @@
+---
+inclusion: always
+---
+# Solo workflow
+
+- One developer, hard deadline: deployed MVP by 6:00 PM ET. Prefer the smallest change that completes the journey.
+- Do not add features outside product.md. New ideas go to docs/backlog.md.
+- Record decisions in docs/decisions.md as `provisional` or `approved`. Only the developer approves.
+- Log real Kiro usage in docs/kiro-usage.md. Never invent usage, bugs, metrics, or time savings.
+- Small commits with clear messages; commit only when the developer asks.
+- Never print credentials or env values. Never create nested Git repos.
+
+## Doc upkeep (end of every turn that changed something)
+- New or changed choice → docs/decisions.md (next D-ID; Kiro-proposed = `provisional`)
+- Used a Kiro feature with an observable result → docs/kiro-usage.md row
+- Out-of-scope idea → docs/backlog.md parking lot
+- Official URL opened or claim checked → docs/source-register.md
+- MCP server added/removed → docs/mcp-register.md
+- Scope, stack, or status changed → README.md / docs/project-brief.md
+- In the final reply, list which docs were updated, or say "no doc updates needed".
