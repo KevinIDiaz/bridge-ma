@@ -4,19 +4,52 @@ Bridge MA helps a Massachusetts resident turn a crisis into a sourced sequence o
 
 > Demo only. Uses fictional data. Not affiliated with any government agency. Does not determine eligibility, give legal advice, or submit applications.
 
+Repo: https://github.com/KevinIDiaz/bridge-ma
+
 ## Journey
 Tell your story → Confirm facts → View three next actions → See reusable documents → Understand uncertainty / human help → Print bilingual handoff.
 
 ## Status
-Planning. The app is not scaffolded yet.
-
-## Stack (planned)
-Next.js, TypeScript, npm, local versioned JSON fixtures, EN/ES dictionaries, provider-independent model adapter with deterministic fallback, Vitest, fast-check, Playwright.
+Scaffolded. Built: English/Spanish landing page and a placeholder for step 1. Not built yet: intake, fact confirmation, rules engine, action cards, handoff.
 
 ## Requirements
-- Node.js 20+ and npm 10+
-- Git
-- GitHub CLI (`gh`) for publishing (not installed on the dev machine yet)
+- Node.js 20.9+ (developed on 20.18.0; Node 22 LTS recommended, see below)
+- npm 10+
+- Git; GitHub CLI (`gh`) for publishing
+
+## Setup
+```powershell
+npm ci
+npx playwright install chromium   # only needed for e2e tests
+npm run dev                       # http://localhost:3000 -> redirects to /en
+```
+
+## Scripts
+| Script | What it does |
+|--------|--------------|
+| `npm run dev` | Next.js dev server |
+| `npm run typecheck` | `tsc --noEmit` (strict) |
+| `npm run lint` | ESLint (Next.js core-web-vitals + TypeScript rules) |
+| `npm test` | All Vitest tests (unit + property) |
+| `npm run test:property` | fast-check property tests only |
+| `npm run test:e2e` | Playwright + axe; builds and starts the app on port 3100 |
+| `npm run build` | Production build |
+
+## Layout
+```
+src/app/[lang]/        routes for en and es (landing, story placeholder)
+src/components/        React components
+src/lib/i18n/          en.json, es.json, locale helpers
+src/lib/data/          fixture types and validating loader
+src/lib/rules/         deterministic domain code (types only so far)
+src/lib/model/         model adapter interface + deterministic demo fallback
+src/fixtures/          versioned JSON (programs.v1.json)
+tests/unit|property|e2e
+```
+Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapter, React, or Next (ESLint enforced). No database, authentication, analytics, or production AI provider.
+
+## Known environment notes
+- Node 20.18.0 is below what some current tools want (vitest 5, eslint 10, and `@axe-core/playwright` 4.14 need Node 22.12+ or 20.19+), so older compatible versions are pinned. `vitest.config.mts` must stay ESM on this Node version.
 
 ## Docs
 - [Project brief](docs/project-brief.md)

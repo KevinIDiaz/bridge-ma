@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Bridge MA",
+    "languageName": "English",
+    "languageLabel": "Language",
+    "skipToContent": "Skip to main content",
+    "footer": "Fictional demo for Hackachusetts. Not a government website."
+  },
+  "meta": {
+    "title": "Bridge MA: next steps for food, housing, and utility help",
+    "description": "A fictional demo that turns a hard moment into sourced next steps for SNAP, RAFT, and utility shutoff protection in Massachusetts."
+  },
+  "landing": {
+    "purpose": "Bridge MA turns a hard moment into clear, sourced next steps for SNAP, RAFT, and utility shutoff protection in Massachusetts.",
+    "disclosureTitle": "This is a demo with fictional data",
+    "disclosureBody": "It uses made-up people and documents. It is not a government website. It does not decide if you qualify, give legal advice, or send applications for you.",
+    "start": "Start"
+  },
+  "story": {
+    "stepLabel": "Step 1 of 6",
+    "title": "Tell your story",
+    "notBuilt": "This step is not built yet.",
+    "back": "Back to home"
+  }
+}

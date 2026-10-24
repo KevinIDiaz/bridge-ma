@@ -1,0 +1,25 @@
+{
+  "common": {
+    "appName": "Bridge MA",
+    "languageName": "Español",
+    "languageLabel": "Idioma",
+    "skipToContent": "Saltar al contenido principal",
+    "footer": "Demostración ficticia para Hackachusetts. No es un sitio web del gobierno."
+  },
+  "meta": {
+    "title": "Bridge MA: próximos pasos para ayuda con comida, vivienda y servicios públicos",
+    "description": "Una demostración ficticia que convierte un momento difícil en próximos pasos con fuentes para SNAP, RAFT y la protección contra cortes de servicios públicos en Massachusetts."
+  },
+  "landing": {
+    "purpose": "Bridge MA convierte un momento difícil en próximos pasos claros y con fuentes para SNAP, RAFT y la protección contra cortes de servicios públicos en Massachusetts.",
+    "disclosureTitle": "Esta es una demostración con datos ficticios",
+    "disclosureBody": "Usa personas y documentos inventados. No es un sitio web del gobierno. No decide si usted califica, no da consejos legales y no envía solicitudes por usted.",
+    "start": "Comenzar"
+  },
+  "story": {
+    "stepLabel": "Paso 1 de 6",
+    "title": "Cuente su historia",
+    "notBuilt": "Este paso aún no está listo.",
+    "back": "Volver al inicio"
+  }
+}
