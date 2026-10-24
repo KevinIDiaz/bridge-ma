@@ -59,7 +59,12 @@ function FactRow({ fact, dict }: { fact: ResidentFact; dict: Dictionary }) {
   const label = dict.facts[fact.id as keyof typeof dict.facts] ?? fact.id;
 
   return (
-    <li className="confirm-row">
+    <li
+      className="confirm-row"
+      data-fact-id={fact.id}
+      data-value={String(fact.value)}
+      data-confirmation={fact.confirmation}
+    >
       <div className="confirm-fact">
         <span className="fact-label">{label}</span>
         <span className="fact-value">{formatValue(def, fact.value, dict)}</span>

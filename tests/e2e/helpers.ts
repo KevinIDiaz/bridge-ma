@@ -8,7 +8,7 @@ import { expect, type Page } from "@playwright/test";
  *         the intake and confirmation first and then following in-app links.
  * The Lead flips this to false when merging intake + domain, which also enables the skipped specs.
  */
-export const PRE_INTEGRATION = true;
+export const PRE_INTEGRATION = false;
 
 export type Lang = "en" | "es";
 export type Step = "actions" | "documents" | "help" | "handoff";

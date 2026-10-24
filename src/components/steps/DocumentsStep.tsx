@@ -10,7 +10,7 @@ import { JourneyErrorNotice, StepNav } from "./StepParts";
 export function DocumentsStep({ lang }: { lang: Locale }) {
   const dict = getDictionary(lang);
   const t = dict.documents;
-  const state = useJourneyState();
+  const state = useJourneyState(lang);
   const rows = useMemo(
     () => (state.kind === "ok" ? localizeEvidence(dict, state.result.evidence, state.result.graph.nodes) : []),
     [state, dict],

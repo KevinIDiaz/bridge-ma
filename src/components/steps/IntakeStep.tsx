@@ -201,10 +201,12 @@ function FactControl({ def, dict, rawValue, unknown, error, onValue, onUnknown }
   const inputId = `field-${def.id}`;
   return (
     <fieldset className={error ? "has-error" : undefined}>
-      <legend>{label}</legend>
+      {/* The visible legend also names the input (axe "label" rule; fixed at integration). */}
+      <legend id={`${inputId}-label`}>{label}</legend>
       {def.kind === "number" ? (
         <input
           id={inputId}
+          aria-labelledby={`${inputId}-label`}
           type="number"
           step="1"
           inputMode="numeric"
@@ -218,6 +220,7 @@ function FactControl({ def, dict, rawValue, unknown, error, onValue, onUnknown }
       ) : (
         <input
           id={inputId}
+          aria-labelledby={`${inputId}-label`}
           type="text"
           maxLength={200}
           value={unknown ? "" : rawValue}

@@ -121,7 +121,7 @@ export function HandoffBlock({ block }: { block: HandoffBlockView }) {
 
 export function HandoffStep({ lang }: { lang: Locale }) {
   const t = getDictionary(lang).handoff;
-  const state = useJourneyState();
+  const state = useJourneyState(lang);
   const blocks = useMemo(
     () =>
       state.kind === "ok"

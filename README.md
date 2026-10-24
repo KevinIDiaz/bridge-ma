@@ -37,6 +37,7 @@ npm run dev                       # http://localhost:3000 -> redirects to /en
 | `npm run test:property` | fast-check property tests only |
 | `npm run test:e2e` | Playwright + axe; builds and starts the app on port 3100 |
 | `npm run build` | Production build |
+| `npm start` | Serve the production build at http://localhost:3000 (use this for the demo video) |
 
 ## Layout
 ```

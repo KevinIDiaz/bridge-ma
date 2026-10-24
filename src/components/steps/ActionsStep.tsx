@@ -11,7 +11,7 @@ import { JourneyErrorNotice, StepNav } from "./StepParts";
 export function ActionsStep({ lang }: { lang: Locale }) {
   const dict = getDictionary(lang);
   const t = dict.actions;
-  const state = useJourneyState();
+  const state = useJourneyState(lang);
   const result = state.kind === "ok" ? state.result : null;
   const cards = useMemo(
     () => (state.kind === "ok" ? localizeActionCards(dict, lang, state.result, state.fixture) : []),

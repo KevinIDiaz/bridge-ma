@@ -10,7 +10,7 @@ import { JourneyErrorNotice, SourceList, StepNav } from "./StepParts";
 export function HelpStep({ lang }: { lang: Locale }) {
   const dict = getDictionary(lang);
   const t = dict.help;
-  const state = useJourneyState();
+  const state = useJourneyState(lang);
   const view = useMemo(
     () => (state.kind === "ok" ? localizeHelp(dict, lang, state.result, state.fixture) : null),
     [state, dict, lang],

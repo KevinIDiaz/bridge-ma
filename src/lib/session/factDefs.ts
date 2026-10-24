@@ -1,38 +1,17 @@
-// Feature-local FactDef stub for the intake flow (Teammate 1).
+// Intake fact definitions and the fictional demo fill (Teammate 1; wired at integration).
 //
-// WHY THIS EXISTS: IntakeStep and ConfirmStep need the ordered list of FactDefs
-// to render one control per fact. The authoritative list lives in the Lead's
-// `src/fixtures/programs.v2.json` (task 1.2), which has not merged onto this
-// branch yet. Per the team rule ("build against a small feature-local stub that
-// documents its assumptions; never redefine shared types"), this mirrors the
-// design's "Fixture src/fixtures/programs.v2.json" facts table exactly.
+// Integration (Stage 3): the stub list was replaced by the fixture's FactDefs, so intake,
+// confirmation, and the engine read one source of truth (`src/fixtures/programs.v2.json`).
+// If the fixture fails to load, intake renders no controls and steps 3–6 show human help.
 //
-// AT INTEGRATION: the Lead/integrator should delete this file and feed the
-// intake components `fixtureResult.value.facts` instead. The shape here is the
-// shared `FactDef` type from the contract — it is not redefined.
-//
-// Assumptions encoded (from design "Facts" + "Expected demo outcome"):
-// - Order matches the design table; the first text/number fact pairs with an
-//   "I don't know" control; booleans/choices use a radio group incl. "I don't know".
 // - `neighborhood` is areaContext (never reaches the engine) but is still shown
 //   in intake/confirm as area context.
-// - Demo fill values come from design "Expected demo outcome".
+// - Demo fill values come from design "Expected demo outcome". Fictional data only.
 
+import { fixtureResult } from "@/lib/data/programs";
 import type { FactDef, FactValue, Unknown } from "@/lib/rules/types";
 
-export const INTAKE_FACT_DEFS: readonly FactDef[] = [
-  { id: "preferred_language", kind: "choice", options: ["en", "es"] },
-  { id: "city", kind: "text" },
-  { id: "neighborhood", kind: "text", areaContext: true },
-  { id: "household_size", kind: "number", min: 1, max: 20 },
-  { id: "single_parent", kind: "boolean" },
-  { id: "lives_in_ma", kind: "boolean" },
-  { id: "lost_job_recently", kind: "boolean" },
-  { id: "rents_home", kind: "boolean" },
-  { id: "received_notice_to_quit", kind: "boolean" },
-  { id: "has_utility_account", kind: "boolean" },
-  { id: "received_shutoff_notice", kind: "boolean" },
-];
+export const INTAKE_FACT_DEFS: readonly FactDef[] = fixtureResult.ok ? fixtureResult.value.facts : [];
 
 /** Demo persona (design "Expected demo outcome"). Fictional data only. */
 export const DEMO_FILL: Readonly<Record<string, FactValue | Unknown>> = {

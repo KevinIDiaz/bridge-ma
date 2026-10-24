@@ -40,7 +40,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - **Validates: Requirements 16.12, 16.13**
     - Done when: `npx vitest --run tests/property/fixture.property.test.ts` passes with `numRuns: 100`.
 
-- [ ] 2. Deterministic evaluation and property tests
+- [x] 2. Deterministic evaluation and property tests
   - [x] 2.1 Implement `splitFacts` in `src/lib/rules/facts.ts` and `evaluatePrograms` in `src/lib/rules/engine.ts`
     - `splitFacts` drops `areaContext` facts and returns confirmed values plus unconfirmed IDs only
     - `evaluatePrograms` uses Kleene AND, fixed order `snap`, `raft`, `utility`, the missing/unconfirmed/neither partition, and `rule_count` errors
@@ -160,7 +160,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - _Requirements: 3.10, 16.13_
     - Done when: `npx vitest --run`, `npm run typecheck`, and `npm run lint` all pass.
 
-- [ ] 3. Intake and fact confirmation
+- [x] 3. Intake and fact confirmation
   - [x] 3.1 Implement the session store and `useSession` hook
     - `src/lib/session/store.ts` with `get`, `subscribe`, `setFacts`, `confirmFact`, `updateFact` (resets to `unconfirmed` and clears cached explanations), `setExplanation`, and `EMPTY_SESSION`; no React import; no cookies or storage
     - `src/components/useSession.ts` using `useSyncExternalStore` with `EMPTY_SESSION` as the server snapshot
@@ -254,7 +254,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Assert exactly one `h1` per step
     - _Requirements: 15.3, 15.5, 15.6_
     - Done when: `npx playwright test tests/e2e/a11y.spec.ts` passes with zero axe violations and no horizontal scroll at 320 px.
-  - [ ] 7.6 Run the full verification suite and fix any failures
+  - [x] 7.6 Run the full verification suite and fix any failures
     - Run `npm run typecheck`, `npm run lint`, `npx vitest --run`, `npm run build`, and `npx playwright test`
     - _Requirements: 3.10, 12.2, 16.13_
     - Done when: all five commands exit with code 0.
