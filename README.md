@@ -10,7 +10,7 @@ Repo: https://github.com/KevinIDiaz/bridge-ma
 Tell your story → Confirm facts → View three next actions → See reusable documents → Understand uncertainty / human help → Print bilingual handoff.
 
 ## Status
-Spec approved (`.kiro/specs/action-graph/`). Shared domain contract in `src/lib/rules/types.ts`. Built so far: English/Spanish landing page and a step 1 placeholder. Not built yet: the rules engine and journey steps 1–6 (see tasks.md).
+All six journey steps work end to end in English and Spanish on `main`. The deterministic rules engine and action graph sit behind `evaluateBridge` (`src/lib/rules/bridge.ts`); the shared contract is `src/lib/rules/types.ts`. Every source is still `unreviewed`, so every rule is labeled "Demo rule" and no deadline is shown. Submission is this repo plus a video demo of a local production build (D-108).
 
 ## Team workflow
 Three developers work in parallel. Roles, branches, owned paths, and task IDs are in `.kiro/steering/team.md` (loaded by every Kiro agent); the full plan is `docs/team-assignments.md`. Tell your Kiro agent your role (Lead, Teammate 1, or Teammate 2) at the start of a session. Contract files (`src/lib/rules/types.ts`, the fixture schema) change only with Lead approval.
@@ -37,11 +37,15 @@ npm run dev                       # http://localhost:3000 -> redirects to /en
 | `npm run test:property` | fast-check property tests only |
 | `npm run test:e2e` | Playwright + axe; builds and starts the app on port 3100 |
 | `npm run build` | Production build |
-| `npm start` | Serve the production build at http://localhost:3000 (use this for the demo video) |
+| `npm start` | Serve the production build at http://localhost:3000 (use this for the demo video). It listens on every network interface; on shared Wi-Fi use `npm start -- -H localhost` |
+| `npm run validate:locales` | `en`/`es` key parity and placeholder check |
+| `npm run validate:provenance` | Rule/source referential and provenance check for `programs.v2.json` |
 
 ## Layout
 ```
-src/app/[lang]/        routes for en and es (landing, story placeholder)
+src/app/[lang]/        routes for en and es (landing, story, confirm, actions, documents, help, handoff)
+src/lib/session/       in-memory session store and input validation
+src/components/steps/  one client component per journey step
 src/components/        React components
 src/lib/i18n/          en.json, es.json, locale helpers
 src/lib/data/          fixture types and validating loader

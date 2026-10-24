@@ -738,7 +738,7 @@ PBT applies to the pure domain modules (engine, graph builder, validator, deadli
 **Unit tests** (`tests/unit`, Vitest):
 
 - **engine**: demo persona before and after confirmation (the table in Data Models); `rule_count` errors for 0 or 2 rules and for zero predicates.
-- **graph**: `missing_ref` for each ref kind; edge dropping when RAFT is not first.
+- **graph**: `missing_ref` for each ref kind; backward edge `A-RAFT → A-SNAP` dropped before confirmation (D-101).
 - **validate**: one hand-made graph with all three error kinds at once.
 - **deadline**: one example per reason and one computed date (test-only reviewed fixture).
 - **fixture**: v2 parses; each rejection rule (unknown source, `synthetic:false` + unreviewed, bad evidence type/action, duplicate pair, bad edge); the no-numbers guard on unreviewed records (Req 4.7).
