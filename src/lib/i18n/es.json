@@ -13,7 +13,7 @@
   "landing": {
     "purpose": "Bridge MA convierte un momento difícil en próximos pasos claros y con fuentes para SNAP, RAFT y la protección contra cortes de servicios públicos en Massachusetts.",
     "disclosureTitle": "Esta es una demostración con datos ficticios",
-    "disclosureBody": "Usa personas y documentos inventados. No es un sitio web del gobierno. No decide si usted califica, no da consejos legales y no envía solicitudes por usted.",
+    "disclosureBody": "Usa personas y documentos inventados. No es un sitio web del gobierno. No decide quién puede recibir beneficios, no da consejos legales y no envía solicitudes por usted.",
     "start": "Comenzar"
   },
   "story": {
@@ -21,5 +21,203 @@
     "title": "Cuente su historia",
     "notBuilt": "Este paso aún no está listo.",
     "back": "Volver al inicio"
+  },
+  "journey": {
+    "stepNav": "Pasos del recorrido",
+    "noSession": "Todavía no tenemos sus respuestas. Las respuestas se guardan solo en esta pestaña del navegador, así que se borran al recargar la página.",
+    "startOver": "Ir al paso 1: Cuente su historia",
+    "error": "Algo salió mal al preparar sus próximos pasos, así que no se muestran resultados. Pida ayuda a una persona: asistencia legal, una oficina del programa o una línea general de ayuda."
+  },
+  "actions": {
+    "stepLabel": "Paso 3 de 6",
+    "title": "Sus próximas acciones",
+    "intro": "Estas acciones salen de reglas de demostración y de las respuestas que usted confirmó. La acción más urgente va primero.",
+    "why": "Por qué aparece",
+    "facts": "Respuestas que necesita esta regla",
+    "missing": "Faltan",
+    "unconfirmed": "Sin confirmar todavía",
+    "noneMissing": "No falta ninguna respuesta necesaria y todas están confirmadas.",
+    "nextStep": "Próximo paso",
+    "handoff": "Quién puede ayudar",
+    "order": "Orden",
+    "doAfter": "Haga esto después de {program}. {reason}",
+    "evidence": "Documentos para esta acción",
+    "reusedBy": "También sirve para: {programs}",
+    "notReused": "Solo sirve para esta acción.",
+    "sources": "Fuentes",
+    "ruleLine": "Regla {ruleId}, versión {ruleVersion}, versión de datos {fixtureVersion}",
+    "deadline": "Fecha límite",
+    "back": "Atrás: Confirme sus respuestas",
+    "next": "Siguiente: Documentos que debe reunir"
+  },
+  "documents": {
+    "stepLabel": "Paso 4 de 6",
+    "title": "Documentos que debe reunir",
+    "intro": "Reúna cada documento una sola vez. Algunos documentos sirven para más de una acción.",
+    "usedFor": "Sirve para",
+    "reused": "Sirve para {count} acciones. Reúnalo una sola vez.",
+    "empty": "No hay documentos en la lista. Pida ayuda a una persona, por ejemplo a una línea general de ayuda.",
+    "noUpload": "Esta aplicación no sube, escanea ni guarda documentos.",
+    "back": "Atrás: Sus próximas acciones",
+    "next": "Siguiente: Preguntas y quién puede ayudar"
+  },
+  "help": {
+    "stepLabel": "Paso 5 de 6",
+    "title": "Lo que todavía no sabemos y quién puede ayudar",
+    "cantTellTitle": "Programas que todavía no sabemos",
+    "noneCantTell": "Ningún programa está marcado ahora como \"todavía no se sabe\".",
+    "missing": "Faltan",
+    "unconfirmed": "Sin confirmar todavía",
+    "none": "Ninguna",
+    "syntheticTitle": "Reglas de demostración usadas",
+    "syntheticRule": "Regla {ruleId}, versión {ruleVersion}",
+    "sourcesTitle": "Fuentes que aún no se han revisado",
+    "noUnreviewedSources": "Todas las fuentes citadas están revisadas.",
+    "humanHelpTitle": "Personas que pueden ayudar",
+    "humanHelpIntro": "Pida una de estas opciones por su nombre. Esta demostración no muestra números de teléfono ni direcciones.",
+    "legalAidNotice": "Usted dijo que recibió un Aviso de Desalojo (Notice to Quit). Haga a la asistencia legal cualquier pregunta sobre el aviso.",
+    "statementsTitle": "Tenga en cuenta",
+    "back": "Atrás: Documentos que debe reunir",
+    "next": "Siguiente: Imprima su resumen"
+  },
+  "handoff": {
+    "stepLabel": "Paso 6 de 6",
+    "title": "Su resumen para imprimir",
+    "intro": "Este resumen está en inglés y en español. Puede llevarlo a un trabajador social o a una oficina de asistencia legal.",
+    "print": "Imprimir este resumen",
+    "blockTitle": "Resumen en español",
+    "confirmedFacts": "Sus respuestas confirmadas",
+    "noConfirmedFacts": "Todavía no hay respuestas confirmadas.",
+    "unknownFacts": "Respuestas que todavía necesitamos",
+    "noUnknownFacts": "No falta ninguna respuesta necesaria.",
+    "factState": {
+      "unknown": "Usted dijo que no sabe",
+      "missing": "Sin respuesta",
+      "unconfirmed": "Sin confirmar todavía"
+    },
+    "actions": "Próximas acciones",
+    "evidence": "Documentos que debe reunir",
+    "targets": "Quién puede ayudar",
+    "fixtureVersion": "Versión de datos: {version}",
+    "generatedAt": "Creado el: {date}",
+    "errorBackToConfirm": "Volver y revisar sus respuestas",
+    "back": "Atrás: Preguntas y quién puede ayudar"
+  },
+  "status": {
+    "may_match": "puede coincidir",
+    "likely_not": "probablemente no coincide",
+    "cant_tell": "todavía no se sabe"
+  },
+  "dimension": {
+    "status": "Coincidencia",
+    "urgency": "Urgencia",
+    "sourceFreshness": "Revisión de la fuente",
+    "factConfirmation": "Sus respuestas",
+    "explanationOrigin": "Tipo de explicación"
+  },
+  "dimensionValue": {
+    "urgency": {
+      "urgent": "Urgente",
+      "standard": "Normal",
+      "unknown": "No se sabe"
+    },
+    "sourceFreshness": {
+      "reviewed": "Revisada",
+      "unreviewed": "Sin revisar",
+      "stale": "Desactualizada"
+    },
+    "factConfirmation": {
+      "all_confirmed": "Todas confirmadas",
+      "has_unconfirmed": "Algunas sin confirmar",
+      "has_missing": "Faltan algunas"
+    },
+    "explanationOrigin": {
+      "generated": "Generada",
+      "rule_based": "Basada en reglas"
+    }
+  },
+  "program": {
+    "snap": "Beneficios de comida SNAP",
+    "raft": "Ayuda de vivienda RAFT",
+    "utility": "Protección contra cortes de servicios públicos"
+  },
+  "evidence": {
+    "E-ID": "Prueba de identidad",
+    "E-JOB-LOSS": "Prueba de pérdida de empleo",
+    "E-HOUSEHOLD": "Lista de las personas del hogar",
+    "E-NTQ": "Copia del Aviso de Desalojo (Notice to Quit)",
+    "E-LEASE": "Contrato de alquiler o registro de pagos de renta",
+    "E-UTIL-BILL": "Factura reciente de servicios públicos"
+  },
+  "level": {
+    "required": "Necesario",
+    "helpful": "Útil"
+  },
+  "nextStep": {
+    "snap": "Pregunte en la oficina del programa SNAP cómo hacer la solicitud. Lleve los documentos de la lista.",
+    "raft": "Hable con la asistencia legal sobre su aviso y pregunte por la ayuda de vivienda RAFT.",
+    "utility": "Llame a una línea general de ayuda y pregunte por la protección contra un corte de servicios públicos."
+  },
+  "reason": {
+    "R-SNAP": {
+      "may_match": "Sus respuestas confirmadas encajan con la regla de demostración de SNAP: vive en Massachusetts y perdió su empleo hace poco.",
+      "likely_not": "Al menos una de sus respuestas confirmadas no encaja con la regla de demostración de SNAP.",
+      "cant_tell": "Faltan o no están confirmadas algunas respuestas que necesita la regla de demostración de SNAP."
+    },
+    "R-RAFT": {
+      "may_match": "Sus respuestas confirmadas encajan con la regla de demostración de RAFT: vive en Massachusetts, alquila su vivienda y recibió un Aviso de Desalojo (Notice to Quit).",
+      "likely_not": "Al menos una de sus respuestas confirmadas no encaja con la regla de demostración de RAFT.",
+      "cant_tell": "Faltan o no están confirmadas algunas respuestas que necesita la regla de demostración de RAFT."
+    },
+    "R-UTIL": {
+      "may_match": "Sus respuestas confirmadas encajan con la regla de demostración de protección contra cortes: vive en Massachusetts, tiene una cuenta de servicios y recibió un aviso de corte.",
+      "likely_not": "Al menos una de sus respuestas confirmadas no encaja con la regla de demostración de protección contra cortes.",
+      "cant_tell": "Faltan o no están confirmadas algunas respuestas que necesita la regla de demostración de protección contra cortes."
+    }
+  },
+  "explain": {
+    "snap": {
+      "may_match": "SNAP ayuda a las personas a comprar comida. Según una regla de demostración, su situación puede coincidir. La decisión real la toma una oficina del programa.",
+      "likely_not": "SNAP ayuda a las personas a comprar comida. Según una regla de demostración, su situación probablemente no coincide. Una oficina del programa puede responder sus preguntas.",
+      "cant_tell": "SNAP ayuda a las personas a comprar comida. Todavía no se sabe porque faltan algunas respuestas. Una oficina del programa puede ayudar."
+    },
+    "raft": {
+      "may_match": "RAFT puede ayudar con los costos de vivienda. Según una regla de demostración, su situación puede coincidir. La asistencia legal puede ayudarle con el aviso.",
+      "likely_not": "RAFT puede ayudar con los costos de vivienda. Según una regla de demostración, su situación probablemente no coincide. La asistencia legal puede responder sus preguntas.",
+      "cant_tell": "RAFT puede ayudar con los costos de vivienda. Todavía no se sabe porque faltan algunas respuestas. La asistencia legal puede ayudar."
+    },
+    "utility": {
+      "may_match": "Algunas reglas pueden proteger a las personas de un corte de servicios. Según una regla de demostración, su situación puede coincidir. Una línea de ayuda puede darle más información.",
+      "likely_not": "Algunas reglas pueden proteger a las personas de un corte de servicios. Según una regla de demostración, su situación probablemente no coincide. Una línea de ayuda puede responder sus preguntas.",
+      "cant_tell": "Algunas reglas pueden proteger a las personas de un corte de servicios. Todavía no se sabe porque faltan algunas respuestas. Una línea de ayuda puede ayudar."
+    }
+  },
+  "explanation": {
+    "generated": "Explicación generada",
+    "ruleBased": "Explicación basada en reglas (plantilla)"
+  },
+  "edge": {
+    "housing_first": "Conservar su vivienda va primero."
+  },
+  "humanHelp": {
+    "legal_aid": "Asistencia legal",
+    "program_office": "Oficina del programa",
+    "general_help_line": "Línea general de ayuda"
+  },
+  "deadline": {
+    "unknown": "No se muestra fecha límite. Pregunte a una persona que le ayude sobre los plazos.",
+    "computed": "{date} (regla {ruleId}, fuente {sourceId})"
+  },
+  "labels": {
+    "syntheticRule": "Regla de demostración, no verificada con la política oficial",
+    "unverified": "Sin verificar",
+    "ruleBasedResult": "Resultado basado en reglas",
+    "fictionalDemo": "Demostración ficticia",
+    "externalOfficialPage": "página oficial externa"
+  },
+  "statements": {
+    "notEligibility": "Estos resultados no son una decisión sobre su elegibilidad.",
+    "notAgency": "Esta aplicación no es una agencia del gobierno y estos resultados no vienen de una.",
+    "noNtqAssessment": "Esta aplicación no evalúa si un Aviso de Desalojo (Notice to Quit) es válido."
   }
 }

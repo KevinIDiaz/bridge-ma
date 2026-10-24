@@ -14,6 +14,8 @@
     "test": "vitest run",
     "test:property": "vitest run tests/property",
     "test:e2e": "playwright test",
+    "validate:locales": "node scripts/validate-locales.mjs",
+    "validate:provenance": "node scripts/validate-provenance.mjs",
     "build": "next build"
   },
   "dependencies": {

@@ -119,17 +119,17 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Add `tests/unit/handoff.test.ts`: demo persona packet after confirmation (utility's `received_shutoff_notice` listed as `unknown`, never `false`; `generatedAt` equals the passed date)
     - _Requirements: 13.1, 13.3_
     - Done when: `npx vitest --run tests/unit/handoff.test.ts` passes.
-  - [ ] 2.19 Add dictionary keys and implement the Localizer
+  - [x] 2.19 Add dictionary keys and implement the Localizer
     - Add every key group from design "Dictionary additions" to `src/lib/i18n/en.json` and `src/lib/i18n/es.json`, with the same key set and non-empty values, including the field-specific validation errors and all UI strings for steps 1–6
     - Implement `localizeActionCard`, `localizeEvidence`, `localizeHelp`, and `localizeHandoff` in `src/lib/i18n/localize.ts` (React-free; structured fields passed through unchanged; source entries carry `lang="en"` when the active locale is `es`)
     - Add `tests/unit/localize.test.ts`: three distinct TriState labels; dictionary scan finds no `eligible|qualif|approved|guarantee|elegible|califica|aprobad|garantiz` and no Notice to Quit validity wording; `localizeHelp` with and without a `cant_tell` program
     - _Requirements: 2.4, 7.2, 7.7, 10.1, 10.2, 11.1, 11.2, 11.5, 11.8, 12.1, 12.2, 12.3, 15.9_
     - Done when: `npx vitest --run tests/unit/localize.test.ts tests/unit/i18n.test.ts` passes.
-  - [ ] 2.20 Write property test for evidence reuse in `tests/property/localize.property.test.ts`
+  - [x] 2.20 Write property test for evidence reuse in `tests/property/localize.property.test.ts`
     - **Property 10: Evidence reuse is consistent**
     - **Validates: Requirements 7.11, 10.1, 10.2, 16.13**
     - Done when: `npx vitest --run tests/property/localize.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.21 Write property test for locale structure in `tests/property/localize.property.test.ts`
+  - [x] 2.21 Write property test for locale structure in `tests/property/localize.property.test.ts`
     - **Property 16: Locale never changes structure**
     - **Validates: Requirements 12.3, 13.2, 16.10, 16.13**
     - Done when: `npx vitest --run tests/property/localize.property.test.ts` passes with `numRuns: 100` per property.
@@ -207,13 +207,13 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.
 
 - [ ] 5. Locale switching
-  - [ ] 5.1 Add the static root layout and nest the `[lang]` layout
+  - [x] 5.1 Add the static root layout and nest the `[lang]` layout
     - Create `src/app/layout.tsx` with `<html lang="en" suppressHydrationWarning>`, the inline lang script in `<head>`, `<body>`, and the `globals.css` import
     - Change `src/app/[lang]/layout.tsx` to a nested layout keeping `generateStaticParams`, `dynamicParams = false`, `generateMetadata`, `notFound()`, skip link, and footer, and rendering `<HtmlLangSync lang={lang} />`
     - Create `src/components/HtmlLangSync.tsx` that sets `document.documentElement.lang` in an effect
     - _Requirements: 12.4, 12.6, 15.9_
     - Done when: `npm run build` passes and `npx playwright test tests/e2e/landing.spec.ts` passes.
-  - [ ] 5.2 Change `src/components/SiteHeader.tsx` to a client component with `next/link` language links
+  - [x] 5.2 Change `src/components/SiteHeader.tsx` to a client component with `next/link` language links
     - Link to `/${other}${path}` with `hrefLang` and `lang`, where `path` comes from `usePathname()` with the locale prefix stripped
     - _Requirements: 12.4, 12.5_
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.
@@ -224,7 +224,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - One `<button class="print-control">` calling `window.print()`; no submit/send/share control; on journey error show the human-help message with a link to `/[lang]/confirm`
     - _Requirements: 9.7, 9.8, 11.4, 11.6, 13.1, 13.2, 13.3, 13.4, 13.6, 13.7, 13.8_
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.
-  - [ ] 6.2 Add the print stylesheet to `src/app/globals.css`
+  - [x] 6.2 Add the print stylesheet to `src/app/globals.css`
     - The `@media print` and `@page` rules from design "Print stylesheet" (hide header, language list, skip link, print control, footer; black on white; page break between blocks; `a.portal-link::after` URL text; no collapsed regions)
     - Make sure the focus indicator rule is at least 2 CSS pixels and not overridden
     - _Requirements: 13.5, 15.2, 15.4_

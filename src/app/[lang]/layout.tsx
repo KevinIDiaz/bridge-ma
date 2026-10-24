@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { HtmlLangSync } from "@/components/HtmlLangSync";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
-import "../globals.css";
 
 export const dynamicParams = false;
 
@@ -23,24 +23,24 @@ export async function generateMetadata({ params }: LangParams): Promise<Metadata
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1 };
 
-export default async function RootLayout({ children, params }: LangParams & { children: ReactNode }) {
+// Nested layout per locale. <html> and <body> live in the static root layout (src/app/layout.tsx).
+export default async function LangLayout({ children, params }: LangParams & { children: ReactNode }) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const t = getDictionary(lang).common;
 
   return (
-    <html lang={lang}>
-      <body>
-        <a className="skip-link" href="#main">
-          {t.skipToContent}
-        </a>
-        {children}
-        <footer className="site-footer">
-          <div className="container">
-            <p>{t.footer}</p>
-          </div>
-        </footer>
-      </body>
-    </html>
+    <>
+      <HtmlLangSync lang={lang} />
+      <a className="skip-link" href="#main">
+        {t.skipToContent}
+      </a>
+      {children}
+      <footer className="site-footer">
+        <div className="container">
+          <p>{t.footer}</p>
+        </div>
+      </footer>
+    </>
   );
 }
