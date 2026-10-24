@@ -482,7 +482,9 @@ production build
 
 Lead
 
-Prepare and deploy the simplest public build. Verify the complete deployed journey, not only the homepage.
+~~Prepare and deploy the simplest public build. Verify the complete deployed journey, not only the homepage.~~
+
+Changed 2026-10-24 (D-108): no deployment. Submission is the GitHub link plus a video demo. Run a local production build (`npm run build`, then `npm start`), verify the complete journey in English and Spanish (not only the homepage), and make sure README run instructions work from a fresh clone.
 
 Teammate 1
 

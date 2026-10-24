@@ -1,6 +1,6 @@
 # Project brief: Bridge MA
 
-Hackachusetts Civic Action project. Solo developer. Deployed MVP due 6:00 PM ET, 2026-10-24.
+Hackachusetts Civic Action project. Three-developer team (see docs/team-assignments.md). Code complete by 6:00 PM ET, 2026-10-24. Submission: public GitHub repo and a video demo; no deployment (D-108).
 
 ## Problem
 A Massachusetts resident in crisis faces several programs with separate rules, documents, and portals. Bridge MA turns their story into a sourced, ordered set of next steps.
@@ -38,7 +38,7 @@ Journey:
 - Fictional data only. No auth, persistence, analytics, or database.
 
 ## Success criteria
-- The six-step journey works end to end in English and Spanish on a public deployment.
+- The six-step journey works end to end in English and Spanish on a local production build (`npm run build`, `npm start`), recorded in the video demo.
 - The app runs fully with no model API key (deterministic fallback).
 - Property tests for the boundaries above pass.
 
