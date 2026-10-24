@@ -21,5 +21,71 @@
     "title": "Tell your story",
     "notBuilt": "This step is not built yet.",
     "back": "Back to home"
+  },
+  "intake": {
+    "stepLabel": "Step 1 of 6",
+    "title": "Tell your story",
+    "intro": "Answer what you can. You can choose \u201cI don\u2019t know\u201d for anything you are not sure about.",
+    "fictionalNotice": "This is fictional demo data. Please do not enter real personal information.",
+    "dontKnow": "I don\u2019t know",
+    "useDemo": "Use fictional demo story",
+    "submit": "Review my answers",
+    "errorSummaryTitle": "Please check these answers",
+    "requiredNote": "No field is required. Anything left blank is treated as \u201cunknown.\u201d"
+  },
+  "confirm": {
+    "stepLabel": "Step 2 of 6",
+    "title": "Confirm your facts",
+    "intro": "Check each answer. Confirm the ones that are right, or edit any that are wrong. Nothing is used until you confirm it.",
+    "confirm": "Confirm",
+    "confirmed": "Confirmed",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "unconfirmedNotice": "You still have {count} fact(s) to confirm before your next steps are complete.",
+    "allConfirmedNotice": "All facts confirmed. You can continue to your next steps.",
+    "areaContextNote": "Neighborhood is area context only. It never affects whether a program matches.",
+    "continue": "See my next steps",
+    "columnFact": "Fact",
+    "columnValue": "Your answer",
+    "columnStatus": "Status",
+    "noSession": "There is nothing to show yet. Your answers are kept only during this visit and were cleared.",
+    "goToStart": "Start by telling your story"
+  },
+  "errors": {
+    "text_too_long": "Please use 200 characters or fewer.",
+    "number_required": "Please enter a whole number, or choose \u201cI don\u2019t know.\u201d",
+    "number_not_whole": "Please enter a whole number with no decimal point.",
+    "number_out_of_range": "Please enter a number within the allowed range.",
+    "choice_invalid": "Please choose one of the listed options.",
+    "boolean_invalid": "Please choose Yes, No, or \u201cI don\u2019t know.\u201d"
+  },
+  "value": {
+    "true": "Yes",
+    "false": "No",
+    "unknown": "I don\u2019t know"
+  },
+  "confirmation": {
+    "confirmed": "Confirmed",
+    "unconfirmed": "Not confirmed yet"
+  },
+  "facts": {
+    "preferred_language": "Preferred language",
+    "city": "City or town",
+    "neighborhood": "Neighborhood",
+    "household_size": "People in your household",
+    "single_parent": "Are you a single parent?",
+    "lives_in_ma": "Do you live in Massachusetts?",
+    "lost_job_recently": "Did you recently lose a job?",
+    "rents_home": "Do you rent your home?",
+    "received_notice_to_quit": "Did you get a Notice to Quit?",
+    "has_utility_account": "Do you have a utility account in your name?",
+    "received_shutoff_notice": "Did you get a utility shutoff notice?"
+  },
+  "factOptions": {
+    "preferred_language": {
+      "en": "English",
+      "es": "Spanish"
+    }
   }
 }
