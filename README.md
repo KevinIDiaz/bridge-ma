@@ -50,7 +50,8 @@ Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapt
 
 ## Environment notes
 - Line endings are LF for every file (`.gitattributes`).
-- npm 11 may print an `install-scripts` warning for `esbuild` and `unrs-resolver`. Install, tests, and build pass anyway.
+- ESLint stays on 9.x: Next's lint plugins (`eslint-plugin-react`, `jsx-a11y`, `import`) don't accept ESLint 10 yet. TypeScript stays on 5.9: `typescript-eslint` requires `<6.1`.
+- `package.json` `allowScripts` approves the `unrs-resolver` postinstall (pulled in by `eslint-config-next`) for npm 11.
 
 ## Docs
 - [Project brief](docs/project-brief.md)
