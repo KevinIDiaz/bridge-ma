@@ -4,7 +4,7 @@
   "private": true,
   "description": "Bridge MA: sourced next steps across SNAP, RAFT, and utility protection (fictional demo)",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "next dev",

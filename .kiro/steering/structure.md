@@ -28,4 +28,4 @@ Rules:
 - `src/lib/rules` and `src/lib/data` must not import `@/lib/model`, React, or Next (ESLint enforced).
 - Planned next: one rule module per program in `src/lib/rules/` (`snap.ts`, `raft.ts`, `utility.ts`).
 - Fixture files are named `<topic>.v<N>.json`.
-- Config: `vitest.config.mts` (must stay `.mts` on Node 20.18), `playwright.config.ts`, `eslint.config.mjs`, `next.config.ts`.
+- Config: `vitest.config.mts` (ESM), `playwright.config.ts`, `eslint.config.mjs`, `next.config.ts`, `.nvmrc` (Node 24), `.gitattributes` (LF).

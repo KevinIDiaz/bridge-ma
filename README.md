@@ -13,7 +13,7 @@ Tell your story → Confirm facts → View three next actions → See reusable d
 Scaffolded. Built: English/Spanish landing page and a placeholder for step 1. Not built yet: intake, fact confirmation, rules engine, action cards, handoff.
 
 ## Requirements
-- Node.js 20.9+ (developed on 20.18.0; Node 22 LTS recommended, see below)
+- Node.js 22.12+ (developed on 24 LTS; see `.nvmrc`)
 - npm 10+
 - Git; GitHub CLI (`gh`) for publishing
 
@@ -48,8 +48,9 @@ tests/unit|property|e2e
 ```
 Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapter, React, or Next (ESLint enforced). No database, authentication, analytics, or production AI provider.
 
-## Known environment notes
-- Node 20.18.0 is below what some current tools want (vitest 5, eslint 10, and `@axe-core/playwright` 4.14 need Node 22.12+ or 20.19+), so older compatible versions are pinned. `vitest.config.mts` must stay ESM on this Node version.
+## Environment notes
+- Line endings are LF for every file (`.gitattributes`).
+- npm 11 may print an `install-scripts` warning for `esbuild` and `unrs-resolver`. Install, tests, and build pass anyway.
 
 ## Docs
 - [Project brief](docs/project-brief.md)

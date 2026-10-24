@@ -1,0 +1,2 @@
+# Keep LF everywhere (steering front-matter, JSON fixtures, configs) regardless of core.autocrlf.
+* text=auto eol=lf
