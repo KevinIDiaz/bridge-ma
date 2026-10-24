@@ -13,7 +13,7 @@ Tell your story → Confirm facts → View three next actions → See reusable d
 Spec approved (`.kiro/specs/action-graph/`). Shared domain contract in `src/lib/rules/types.ts`. Built so far: English/Spanish landing page and a step 1 placeholder. Not built yet: the rules engine and journey steps 1–6 (see tasks.md).
 
 ## Team workflow
-Three teammates work in parallel from the spec commit. Contract files (`src/lib/rules/types.ts`, the fixture schema) change only with team coordination. Suggested ownership is in design.md → Shared contracts and team boundaries.
+Three developers work in parallel. Roles, branches, owned paths, and task IDs are in `.kiro/steering/team.md` (loaded by every Kiro agent); the full plan is `docs/team-assignments.md`. Tell your Kiro agent your role (Lead, Teammate 1, or Teammate 2) at the start of a session. Contract files (`src/lib/rules/types.ts`, the fixture schema) change only with Lead approval.
 
 ## Requirements
 - Node.js 22.12+ (developed on 24 LTS; see `.nvmrc`)

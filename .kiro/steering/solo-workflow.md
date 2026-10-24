@@ -3,9 +3,9 @@ inclusion: always
 ---
 # Solo workflow
 
-- One developer, hard deadline: deployed MVP by 6:00 PM ET. Prefer the smallest change that completes the journey.
+- Three developers in parallel (roles and paths in team.md), hard deadline: deployed MVP by 6:00 PM ET. Prefer the smallest change that completes the journey.
 - Do not add features outside product.md. New ideas go to docs/backlog.md.
-- Record decisions in docs/decisions.md as `provisional` or `approved`. Only the developer approves.
+- Record decisions in docs/decisions.md as `provisional` or `approved`. Only a developer approves; shared-contract decisions need the Lead.
 - Log real Kiro usage in docs/kiro-usage.md. Never invent usage, bugs, metrics, or time savings.
 - Small commits with clear messages; commit only when the developer asks.
 - Never print credentials or env values. Never create nested Git repos.

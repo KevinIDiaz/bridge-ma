@@ -263,11 +263,7 @@ Contract files (changes require coordination across the team):
 - `src/lib/rules/types.ts`: all domain types, including `BridgeEvaluationResult`.
 - `src/fixtures/programs.v2.json` schema.
 
-Suggested ownership:
-
-- **Teammate 1, domain**: `src/lib/rules`, `src/lib/data`, the fixture, and property tests.
-- **Teammate 2, intake/confirm/locale**: `src/lib/session`, steps 1–2, layouts, and `SiteHeader`.
-- **Teammate 3, cards/documents/help/handoff/print**: steps 3–6, `ActionCard`, and `localize.ts`.
+Ownership: see `.kiro/steering/team.md` (Lead = domain and integration, Teammate 1 = intake and confirmation, Teammate 2 = action plan, locales, handoff, verification). Full plan: `docs/team-assignments.md`.
 
 UI teammates may build against a hand-written `BridgeEvaluationResult` stub until `evaluateBridge` lands.
 
