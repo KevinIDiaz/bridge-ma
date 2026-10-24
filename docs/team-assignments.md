@@ -396,6 +396,13 @@ Printable handoff contains only confirmed fictional data.
 No agency form is submitted.
 All required checks pass.
 
+Lead carry-overs from Stage 2 (added 2026-10-24, D-105; no change to teammates' Stage 2 work)
+
+- `explain.<programId>.<status>` keys (3 programs × 3 statuses) exist in both `en.json` and `es.json`. They are part of Teammate 2's task 2.19 already. If any are missing at merge, the Lead adds them while resolving the integration.
+- `useJourney` (task 4.1) wraps `evaluateBridge`. `ActionsStep` calls `explainWithFallback(getModelAdapter(), { programId, status, locale })` from `src/lib/model/explain.ts`, stores results in Session_State, and passes origins back as `explanationOrigins`. An empty explanation text hides the explanation region (D-104).
+- Any test that asserts edges before confirmation expects only `A-RAFT → A-UTIL` (D-101).
+- Properties 10 and 16 (tasks 2.20, 2.21) exist and pass. If they are missing, the Lead lists them in the Stage 4 fix list rather than reopening Stage 2.
+
 Stage 4 — Parallel audit after integration
 
 After integration, parallelize review rather than new implementation.

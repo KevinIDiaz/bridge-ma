@@ -83,7 +83,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Done when: `npx vitest --run tests/property/validate.property.test.ts` passes with `numRuns: 100` per property.
   - [x] 2.10 Implement `buildGraph` in `src/lib/rules/graph.ts`
     - References with `missing_ref` errors; status copy; urgency, sourceFreshness, factConfirmation, explanationOrigin (default `rule_based`); deadline via `computeDeadline`; handoff selection; evidence with `reusedBy`; urgency-then-`raft`/`utility`/`snap` order; forward-only edges
-    - Add `tests/unit/graph.test.ts`: `missing_ref` for each ref kind; demo outcome table after full confirmation (order RAFT, SNAP, UTIL, both edges kept); edges dropped before confirmation
+    - Add `tests/unit/graph.test.ts`: `missing_ref` for each ref kind; demo outcome table after full confirmation (order RAFT, SNAP, UTIL, both edges kept); backward `A-RAFT → A-SNAP` dropped before confirmation (D-101)
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 6.1, 6.2, 6.3, 6.4, 6.6, 6.7, 7.8, 7.9, 7.11_
     - Done when: `npx vitest --run tests/unit/graph.test.ts` passes and `npm run lint` reports no boundary violation.
   - [x] 2.11 Write property test for determinism in `tests/property/graph.property.test.ts`
@@ -133,17 +133,17 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - **Property 16: Locale never changes structure**
     - **Validates: Requirements 12.3, 13.2, 16.10, 16.13**
     - Done when: `npx vitest --run tests/property/localize.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.22 Add the `deterministic` flag to `src/lib/model/adapter.ts` and implement `explainWithFallback` in `src/lib/model/explain.ts`
+  - [x] 2.22 Add the `deterministic` flag to `src/lib/model/adapter.ts` and implement `explainWithFallback` in `src/lib/model/explain.ts`
     - The demo adapter's `explain` returns the `explain.<programId>.<status>` template for the locale; `normalize` stays local (trim and NFC)
     - `explainWithFallback` uses a 5 s timeout, falls back on throw, timeout, or empty/whitespace text, assigns origin from `deterministic`, and cuts text to 600 characters
     - Add `tests/unit/explain.test.ts`: the fallback is deterministic per (program, status, locale) and a `fetch` spy records zero calls
     - _Requirements: 8.2, 8.4, 8.6, 8.7, 14.1, 14.3, 14.8_
     - Done when: `npx vitest --run tests/unit/explain.test.ts tests/property/model-adapter.property.test.ts` passes.
-  - [ ] 2.23 Write property test for model isolation in `tests/property/explain.property.test.ts`
+  - [x] 2.23 Write property test for model isolation in `tests/property/explain.property.test.ts`
     - **Property 14: Model output never changes matching** (uses `vi.useFakeTimers()` for the timeout path)
     - **Validates: Requirements 6.8, 8.2, 8.4, 8.5, 14.6, 14.7, 16.5, 16.13**
     - Done when: `npx vitest --run tests/property/explain.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.24 Write property test for the explanation cap in `tests/property/explain.property.test.ts`
+  - [x] 2.24 Write property test for the explanation cap in `tests/property/explain.property.test.ts`
     - **Property 15: Explanation text is capped**
     - **Validates: Requirements 8.6, 16.13**
     - Done when: `npx vitest --run tests/property/explain.property.test.ts` passes with `numRuns: 100` per property.
@@ -155,7 +155,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - _Requirements: 3.10, 3.11, 5.12, 8.5, 10.1, 13.1_
     - Done when: `npx vitest --run tests/unit/bridge.test.ts` passes and `npm run lint` reports no boundary violation.
 
-  - [ ] 2.26 Checkpoint: domain layer
+  - [x] 2.26 Checkpoint: domain layer
     - Ensure all tests pass, ask the user if questions arise.
     - _Requirements: 3.10, 16.13_
     - Done when: `npx vitest --run`, `npm run typecheck`, and `npm run lint` all pass.

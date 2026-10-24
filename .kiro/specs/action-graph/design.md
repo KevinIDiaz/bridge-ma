@@ -308,7 +308,7 @@ export interface ModelAdapter {
 export async function explainWithFallback(adapter: ModelAdapter, input: ExplainInput, timeoutMs = 5000): Promise<Explanation>;
 ```
 
-- `demoAdapter.explain` returns the dictionary template `explain.<programId>.<status>` for the locale. It makes no network call and needs no key.
+- `demoAdapter.explain` returns the dictionary template `explain.<programId>.<status>` for the locale. It makes no network call and needs no key. The lookup (`explainTemplate` in `src/lib/model/templates.ts`) returns `""` while a key is missing, and the UI hides an empty explanation region (D-104).
 - `explainWithFallback` races `adapter.explain` against a 5 s timer. On a throw, a timeout, or empty or whitespace-only text, it returns the template with `origin: "rule_based"`. On success, the origin is `adapter.deterministic ? "rule_based" : "generated"`. Text is cut to 600 characters.
 - Trigger: `ActionsStep` runs an effect only when the journey result is `ok` (fixture parsed, three evaluations, graph built, every Deadline computed, validator returned `[]`). For each node it calls `explainWithFallback(getModelAdapter(), { programId, status, locale })` and stores the result under `${actionId}:${locale}`. The UI shows the rule-based result immediately. The explanation region fills in when ready and never blocks Next.
 - Origins are passed back into `buildGraph` only through `explanationOrigins`, so no other field can change (Req 8.5).
@@ -542,13 +542,13 @@ Evidence types: `E-ID` (proof of identity), `E-JOB-LOSS` (proof of job loss), `E
 
 `E-ID` is reused by all three actions and `E-JOB-LOSS` by all three.
 
-Edges: `A-RAFT → A-SNAP` and `A-RAFT → A-UTIL`, both `reasonKey: "edge.housing_first"`. The builder drops either edge whenever RAFT is not ordered first.
+Edges: `A-RAFT → A-SNAP` and `A-RAFT → A-UTIL`, both `reasonKey: "edge.housing_first"`. The builder drops an edge whenever its `from` is not ordered before its `to` (D-037, D-101).
 
 ### Expected demo outcome
 
 The demo fill sets: `preferred_language=es`, `city="Boston"`, `neighborhood=unknown`, `household_size=2`, `single_parent=true`, `lives_in_ma=true`, `lost_job_recently=true`, `rents_home=true`, `received_notice_to_quit=true`, `has_utility_account=true`, `received_shutoff_notice=unknown`.
 
-Before any confirmation, all three programs are `cant_tell` with `has_unconfirmed`. Urgency is `standard` for SNAP and `unknown` for RAFT and utility. Order: SNAP, RAFT, UTIL. No edges are kept, because RAFT is not first.
+Before any confirmation, all three programs are `cant_tell` with `has_unconfirmed`. Urgency is `standard` for SNAP and `unknown` for RAFT and utility. Order: SNAP, RAFT, UTIL. Only `A-RAFT → A-UTIL` is kept; `A-RAFT → A-SNAP` is dropped because SNAP comes before RAFT (D-101).
 
 After the resident confirms every fact:
 

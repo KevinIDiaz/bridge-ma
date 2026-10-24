@@ -16,7 +16,7 @@ src/lib/i18n/                  en.json, es.json, index.ts (locales, resolveLocal
 src/lib/data/programs.ts       fixture types + validating loader
 src/lib/rules/types.ts         shared team contract (all domain types incl. BridgeEvaluationResult)
 src/lib/model/adapter.ts       ModelAdapter interface + deterministic demo fallback
-src/fixtures/programs.v1.json  programs + sources (version, sources[])
+src/fixtures/programs.v2.json  sources, programs, facts, rules, actions, evidence, edges (version, sources[])
 tests/unit/                    Vitest
 tests/property/                Vitest + fast-check (`*.property.test.ts`)
 tests/e2e/                     Playwright + axe (`*.spec.ts`)

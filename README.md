@@ -44,9 +44,9 @@ src/app/[lang]/        routes for en and es (landing, story placeholder)
 src/components/        React components
 src/lib/i18n/          en.json, es.json, locale helpers
 src/lib/data/          fixture types and validating loader
-src/lib/rules/         deterministic domain code (types only so far)
+src/lib/rules/         deterministic domain code (engine, deadlines, graph, validator, handoff, evaluateBridge)
 src/lib/model/         model adapter interface + deterministic demo fallback
-src/fixtures/          versioned JSON (programs.v1.json)
+src/fixtures/          versioned JSON (programs.v2.json)
 tests/unit|property|e2e
 ```
 Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapter, React, or Next (ESLint enforced). No database, authentication, analytics, or production AI provider.

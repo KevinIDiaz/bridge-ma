@@ -1,6 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 import type { ProgramId } from "@/lib/data/programs";
 import type { MatchStatus } from "@/lib/rules/types";
+import { explainTemplate } from "./templates";
 
 /** Anything a model produces is labeled as generated. It never feeds back into matching. */
 export interface GeneratedText {
@@ -19,6 +20,8 @@ export interface ExplainInput {
 /** Provider-independent interface. Adapters may normalize or explain; they cannot decide outcomes. */
 export interface ModelAdapter {
   readonly id: string;
+  /** True when output is a fixed template (no model). Its explanations are labeled rule_based. */
+  readonly deterministic: boolean;
   normalize(input: string, locale: Locale): Promise<GeneratedText>;
   explain(input: ExplainInput): Promise<GeneratedText>;
 }
@@ -26,12 +29,12 @@ export interface ModelAdapter {
 /** Deterministic fallback used for the demo. No network, no API key. */
 export const demoAdapter: ModelAdapter = {
   id: "demo-fallback",
+  deterministic: true,
   async normalize(input) {
     return { kind: "generated", provider: this.id, text: input.normalize("NFC").replace(/\s+/g, " ").trim() };
   },
-  async explain({ programId, status }) {
-    // Placeholder until explanation templates exist. Not shown to users yet.
-    return { kind: "generated", provider: this.id, text: `[demo] ${programId}: ${status}` };
+  async explain(input) {
+    return { kind: "generated", provider: this.id, text: explainTemplate(input) };
   },
 };
 
