@@ -188,7 +188,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.
 
 - [ ] 4. Action cards and evidence reuse
-  - [ ] 4.1 Implement `useJourney` in `src/components/useJourney.ts`
+  - [x] 4.1 Implement `useJourney` in `src/components/useJourney.ts`
     - Thin memoized wrapper around `evaluateBridge` (passing `fixtureResult`, session facts, and origins from stored explanations); returns `Result<BridgeEvaluationResult, BridgeError>`
     - _Requirements: 4.3, 5.12, 8.3, 8.5_
     - Done when: `npm run typecheck` passes.
