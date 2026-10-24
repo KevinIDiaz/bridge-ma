@@ -161,28 +161,28 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Done when: `npx vitest --run`, `npm run typecheck`, and `npm run lint` all pass.
 
 - [ ] 3. Intake and fact confirmation
-  - [ ] 3.1 Implement the session store and `useSession` hook
+  - [x] 3.1 Implement the session store and `useSession` hook
     - `src/lib/session/store.ts` with `get`, `subscribe`, `setFacts`, `confirmFact`, `updateFact` (resets to `unconfirmed` and clears cached explanations), `setExplanation`, and `EMPTY_SESSION`; no React import; no cookies or storage
     - `src/components/useSession.ts` using `useSyncExternalStore` with `EMPTY_SESSION` as the server snapshot
     - Add `tests/unit/store.test.ts`: `confirmFact` changes only one fact and keeps its value (including `unknown`); `updateFact` resets to `unconfirmed`, including on a change to `unknown`; server snapshot is empty
     - _Requirements: 1.6, 2.2, 2.3, 14.2_
     - Done when: `npx vitest --run tests/unit/store.test.ts` passes.
-  - [ ] 3.2 Implement input validation in `src/lib/session/validation.ts`
+  - [x] 3.2 Implement input validation in `src/lib/session/validation.ts`
     - Pure, React-free: text ≤ 200 characters, whole-number check, `household_size` 1–20, blank or "I don't know" → `"unknown"`, returns field-keyed error codes that map to dictionary `errors.*` keys
     - Add `tests/unit/validation.test.ts`: boundaries at 200/201 chars, `2.5`, `0`/`1`/`20`/`21`, blank → `unknown`
     - _Requirements: 1.7, 1.8, 2.7, 15.7_
     - Done when: `npx vitest --run tests/unit/validation.test.ts` passes.
-  - [ ] 3.3 Implement `StepHeading` and `RequireSession`
+  - [x] 3.3 Implement `StepHeading` and `RequireSession`
     - `src/components/StepHeading.tsx`: the one `<h1 tabIndex={-1}>` per step, focused on mount
     - `src/components/RequireSession.tsx`: when `facts === null`, renders only the heading, the dictionary message, and a link to `/[lang]/story`
     - _Requirements: 12.7, 15.3, 15.8_
     - Done when: `npm run typecheck` and `npm run lint` pass.
-  - [ ] 3.4 Implement `IntakeStep` and wire `src/app/[lang]/story/page.tsx`
+  - [x] 3.4 Implement `IntakeStep` and wire `src/app/[lang]/story/page.tsx`
     - `src/components/steps/IntakeStep.tsx`: one control per FactDef (fieldset and legend groups, separate "I don't know" choice), fictional-data notice above the first input, "Use fictional demo story" fill without submitting (values from design "Expected demo outcome"), no upload/camera/mic controls
     - On submit: validate with 3.2; on error show `aria-describedby` text errors, focus the first invalid input, keep values; on success `demoAdapter.normalize` text inputs, `session.setFacts` all `unconfirmed`, navigate to `/[lang]/confirm`
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.7, 1.8, 14.8, 15.3, 15.7_
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.
-  - [ ] 3.5 Implement `ConfirmStep` and create `src/app/[lang]/confirm/page.tsx`
+  - [x] 3.5 Implement `ConfirmStep` and create `src/app/[lang]/confirm/page.tsx`
     - `src/components/steps/ConfirmStep.tsx` inside `RequireSession`: one row per fact with label, value label (`value.true`/`value.false`/`value.unknown`), confirmation state, Confirm button, Edit form using the 3.2 validation; unconfirmed-count notice; neighborhood area-context note; link to `/[lang]/actions`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.7, 2.8, 2.9, 12.7_
     - Done when: `npm run typecheck`, `npm run lint`, and `npm run build` pass.

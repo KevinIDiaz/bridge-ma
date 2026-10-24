@@ -21,5 +21,71 @@
     "title": "Cuente su historia",
     "notBuilt": "Este paso aún no está listo.",
     "back": "Volver al inicio"
+  },
+  "intake": {
+    "stepLabel": "Paso 1 de 6",
+    "title": "Cuente su historia",
+    "intro": "Responda lo que pueda. Puede elegir \u201cNo lo sé\u201d para cualquier cosa de la que no esté seguro.",
+    "fictionalNotice": "Estos son datos de demostración ficticios. Por favor, no ingrese información personal real.",
+    "dontKnow": "No lo sé",
+    "useDemo": "Usar historia ficticia de demostración",
+    "submit": "Revisar mis respuestas",
+    "errorSummaryTitle": "Por favor revise estas respuestas",
+    "requiredNote": "Ningún campo es obligatorio. Lo que deje en blanco se tratará como \u201cno lo sé\u201d."
+  },
+  "confirm": {
+    "stepLabel": "Paso 2 de 6",
+    "title": "Confirme sus datos",
+    "intro": "Revise cada respuesta. Confirme las que sean correctas o edite las que estén mal. Nada se usa hasta que usted lo confirme.",
+    "confirm": "Confirmar",
+    "confirmed": "Confirmado",
+    "edit": "Editar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "unconfirmedNotice": "Todavía le quedan {count} dato(s) por confirmar antes de completar sus próximos pasos.",
+    "allConfirmedNotice": "Todos los datos están confirmados. Puede continuar a sus próximos pasos.",
+    "areaContextNote": "El vecindario es solo contexto de área. Nunca afecta si un programa coincide.",
+    "continue": "Ver mis próximos pasos",
+    "columnFact": "Dato",
+    "columnValue": "Su respuesta",
+    "columnStatus": "Estado",
+    "noSession": "Todavía no hay nada que mostrar. Sus respuestas se guardan solo durante esta visita y se borraron.",
+    "goToStart": "Comience contando su historia"
+  },
+  "errors": {
+    "text_too_long": "Por favor use 200 caracteres o menos.",
+    "number_required": "Por favor ingrese un número entero o elija \u201cNo lo sé\u201d.",
+    "number_not_whole": "Por favor ingrese un número entero sin punto decimal.",
+    "number_out_of_range": "Por favor ingrese un número dentro del rango permitido.",
+    "choice_invalid": "Por favor elija una de las opciones de la lista.",
+    "boolean_invalid": "Por favor elija Sí, No o \u201cNo lo sé\u201d."
+  },
+  "value": {
+    "true": "Sí",
+    "false": "No",
+    "unknown": "No lo sé"
+  },
+  "confirmation": {
+    "confirmed": "Confirmado",
+    "unconfirmed": "Aún no confirmado"
+  },
+  "facts": {
+    "preferred_language": "Idioma preferido",
+    "city": "Ciudad o pueblo",
+    "neighborhood": "Vecindario",
+    "household_size": "Personas en su hogar",
+    "single_parent": "¿Es usted madre o padre soltero?",
+    "lives_in_ma": "¿Vive en Massachusetts?",
+    "lost_job_recently": "¿Perdió un trabajo recientemente?",
+    "rents_home": "¿Alquila su vivienda?",
+    "received_notice_to_quit": "¿Recibió un Aviso para Desalojar (Notice to Quit)?",
+    "has_utility_account": "¿Tiene una cuenta de servicios públicos a su nombre?",
+    "received_shutoff_notice": "¿Recibió un aviso de corte de servicios públicos?"
+  },
+  "factOptions": {
+    "preferred_language": {
+      "en": "Inglés",
+      "es": "Español"
+    }
   }
 }
