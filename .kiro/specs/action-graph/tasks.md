@@ -6,115 +6,115 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
 
 ## Tasks
 
-- [ ] 1. Domain types and fixture schemas
+- [x] 1. Domain types and fixture schemas
   - [x] 1.1 Replace `src/lib/rules/types.ts` with the domain types from design "Data Models"
     - Add `ResidentFact`, `FactDef`, `Source`, `Predicate`, `DeadlineCalc`, `RuleVersion`, `ActionDef`, `EvidenceType`, `EvidenceRequirementDef`, `EdgeDef`, `Fixture`, `EngineFacts`, `ProgramEvaluation`, the five dimension types, `Deadline`, `HandoffTarget`, `EvidenceRequirement`, `ActionNode`, `ActionEdge`, `ActionGraph`, `HandoffPacket`, `Explanation`, `Result`, `BridgeEvaluationResult`, `ReusableEvidence`, `BridgeError`, and the error unions
     - This file is the shared team contract; changes need coordination.
     - Remove the old `Fact` / `confirmed: boolean` types and update any importers
     - _Requirements: 1.3, 3.3, 3.8, 5.1, 6.1, 9.1, 13.1_
     - Done when: `npm run typecheck` passes.
-  - [ ] 1.2 Create `src/fixtures/programs.v2.json` and delete `src/fixtures/programs.v1.json`
+  - [x] 1.2 Create `src/fixtures/programs.v2.json` and delete `src/fixtures/programs.v1.json`
     - Use `version: 2` and copy the three v1 Sources unchanged (all `unreviewed`, URL `null`)
     - Add the facts, rules (`R-SNAP`, `R-RAFT`, `R-UTIL`, all `synthetic: true`, `deadline: null`), actions, evidence types, evidence requirements, and the two `edge.housing_first` edges, exactly as in the design tables
     - Include no dollar amounts, day counts, income limits, or date ranges
     - _Requirements: 3.1, 4.2, 4.7, 7.11, 9.3, 10.1_
     - Done when: the file parses as JSON and `src/fixtures/programs.v1.json` no longer exists.
-  - [ ] 1.3 Implement `parseFixture` and `fixtureResult` in `src/lib/data/programs.ts`
+  - [x] 1.3 Implement `parseFixture` and `fixtureResult` in `src/lib/data/programs.ts`
     - Run every check listed under design "Fixture loader": facts, rules (unknown source names the rule ID and source ID; `synthetic: false` with a non-`reviewed` source lists each such source ID), actions, evidence types and requirements (undefined IDs, repeated pairs), edges, and the no-numbers guard regex
     - Collect all errors and return `ok: false` with no partial data
     - _Requirements: 4.1, 4.2, 4.7, 10.3_
     - Done when: `npm run typecheck` passes and `fixtureResult.ok === true` for the v2 fixture.
-  - [ ] 1.4 Replace `tests/unit/program-fixture.test.ts` with `tests/unit/fixture.test.ts`
+  - [x] 1.4 Replace `tests/unit/program-fixture.test.ts` with `tests/unit/fixture.test.ts`
     - v2 parses ok
     - One failing example per rejection rule: unknown source, `synthetic: false` with an unreviewed source, undefined evidence type, undefined action, duplicate (type, action) pair, bad edge
     - The no-numbers guard rejects a `$`, day-count, or `YYYY-MM-DD` string on an unreviewed record, and passes on the real v2 fixture
     - _Requirements: 4.1, 4.2, 4.7, 10.3_
     - Done when: `npx vitest --run tests/unit/fixture.test.ts` passes and no test still imports `programs.v1.json`.
-  - [ ] 1.5 Create shared generators in `tests/property/arbitraries.ts`
+  - [x] 1.5 Create shared generators in `tests/property/arbitraries.ts`
     - `arbFactSet` and `arbSourceStatuses` as described in design "Correctness Properties", plus `arbFixture` (valid schema fixtures) and `arbGraph` helpers for the validator properties
     - Use fictional data only
     - _Requirements: 16.13_
     - Done when: `npm run typecheck` passes.
-  - [ ] 1.6 Write property test for the fixture round trip in `tests/property/fixture.property.test.ts`
+  - [x] 1.6 Write property test for the fixture round trip in `tests/property/fixture.property.test.ts`
     - **Property 18: Fixture round trip**
     - **Validates: Requirements 16.12, 16.13**
     - Done when: `npx vitest --run tests/property/fixture.property.test.ts` passes with `numRuns: 100`.
 
 - [ ] 2. Deterministic evaluation and property tests
-  - [ ] 2.1 Implement `splitFacts` in `src/lib/rules/facts.ts` and `evaluatePrograms` in `src/lib/rules/engine.ts`
+  - [x] 2.1 Implement `splitFacts` in `src/lib/rules/facts.ts` and `evaluatePrograms` in `src/lib/rules/engine.ts`
     - `splitFacts` drops `areaContext` facts and returns confirmed values plus unconfirmed IDs only
     - `evaluatePrograms` uses Kleene AND, fixed order `snap`, `raft`, `utility`, the missing/unconfirmed/neither partition, and `rule_count` errors
     - Add `tests/unit/engine.test.ts`: demo persona before confirmation (all `cant_tell`) and after confirmation (RAFT and SNAP `may_match`, utility `cant_tell` missing `received_shutoff_notice`); `rule_count` errors for 0 rules, 2 rules, and zero predicates
     - _Requirements: 2.5, 2.6, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12_
     - Done when: `npx vitest --run tests/unit/engine.test.ts` passes and `npm run lint` reports no boundary violation.
-  - [ ] 2.2 Write property test for status in `tests/property/engine.property.test.ts`
+  - [x] 2.2 Write property test for status in `tests/property/engine.property.test.ts`
     - **Property 2: Status equals the Kleene reference, and unknown is never definitive**
     - **Validates: Requirements 3.3, 3.4, 3.5, 3.6, 16.2, 16.13**
     - Done when: `npx vitest --run tests/property/engine.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.3 Write property test for the fact partition in `tests/property/engine.property.test.ts`
+  - [x] 2.3 Write property test for the fact partition in `tests/property/engine.property.test.ts`
     - **Property 3: Required facts are partitioned**
     - **Validates: Requirements 2.6, 3.7, 16.13**
     - Done when: `npx vitest --run tests/property/engine.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.4 Implement `computeDeadline` in `src/lib/rules/deadline.ts`
+  - [x] 2.4 Implement `computeDeadline` in `src/lib/rules/deadline.ts`
     - Precedence `source_unreviewed` > `unsupported` > `facts_unconfirmed`; computed path uses UTC date plus `offsetDays`; no clock read
     - Add `tests/unit/deadline.test.ts`: one example per reason, and one computed date using a test-only reviewed fixture
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.9_
     - Done when: `npx vitest --run tests/unit/deadline.test.ts` passes.
-  - [ ] 2.5 Write property test for deadlines in `tests/property/deadline.property.test.ts`
+  - [x] 2.5 Write property test for deadlines in `tests/property/deadline.property.test.ts`
     - **Property 17: No deadline without a reviewed source**
     - **Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.9, 16.11, 16.13**
     - Done when: `npx vitest --run tests/property/deadline.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.6 Implement `validateGraph` in `src/lib/rules/validate.ts`
+  - [x] 2.6 Implement `validateGraph` in `src/lib/rules/validate.ts`
     - Duplicates, dangling edges (`absent: from | to | both`), self-loops, and iterative DFS cycles, all collected in one result
     - Add `tests/unit/validate.test.ts`: one hand-made graph with all three error kinds, and a valid zero-edge graph returning `[]`
     - _Requirements: 5.6, 5.7, 5.8, 5.9, 5.10, 5.11_
     - Done when: `npx vitest --run tests/unit/validate.test.ts` passes.
-  - [ ] 2.7 Write property test for duplicate IDs in `tests/property/validate.property.test.ts`
+  - [x] 2.7 Write property test for duplicate IDs in `tests/property/validate.property.test.ts`
     - **Property 11: Validator reports every duplicate ID**
     - **Validates: Requirements 5.6, 5.10, 16.7, 16.13**
     - Done when: `npx vitest --run tests/property/validate.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.8 Write property test for dangling edges in `tests/property/validate.property.test.ts`
+  - [x] 2.8 Write property test for dangling edges in `tests/property/validate.property.test.ts`
     - **Property 12: Validator reports every dangling edge**
     - **Validates: Requirements 5.7, 5.10, 16.8, 16.13**
     - Done when: `npx vitest --run tests/property/validate.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.9 Write property test for cycle detection in `tests/property/validate.property.test.ts`
+  - [x] 2.9 Write property test for cycle detection in `tests/property/validate.property.test.ts`
     - **Property 13: Cycle detection matches a reference** (Kahn's algorithm oracle)
     - **Validates: Requirements 5.8, 5.9, 5.11, 16.9, 16.13**
     - Done when: `npx vitest --run tests/property/validate.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.10 Implement `buildGraph` in `src/lib/rules/graph.ts`
+  - [x] 2.10 Implement `buildGraph` in `src/lib/rules/graph.ts`
     - References with `missing_ref` errors; status copy; urgency, sourceFreshness, factConfirmation, explanationOrigin (default `rule_based`); deadline via `computeDeadline`; handoff selection; evidence with `reusedBy`; urgency-then-`raft`/`utility`/`snap` order; forward-only edges
     - Add `tests/unit/graph.test.ts`: `missing_ref` for each ref kind; demo outcome table after full confirmation (order RAFT, SNAP, UTIL, both edges kept); edges dropped before confirmation
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 6.1, 6.2, 6.3, 6.4, 6.6, 6.7, 7.8, 7.9, 7.11_
     - Done when: `npx vitest --run tests/unit/graph.test.ts` passes and `npm run lint` reports no boundary violation.
-  - [ ] 2.11 Write property test for determinism in `tests/property/graph.property.test.ts`
+  - [x] 2.11 Write property test for determinism in `tests/property/graph.property.test.ts`
     - **Property 1: Pipeline determinism**
     - **Validates: Requirements 3.11, 9.6, 16.1, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100`.
-  - [ ] 2.12 Write property test for unconfirmed values in `tests/property/graph.property.test.ts`
+  - [x] 2.12 Write property test for unconfirmed values in `tests/property/graph.property.test.ts`
     - **Property 4: Unconfirmed values never change matching**
     - **Validates: Requirements 2.5, 3.2, 16.3, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.13 Write property test for neighborhood isolation in `tests/property/graph.property.test.ts`
+  - [x] 2.13 Write property test for neighborhood isolation in `tests/property/graph.property.test.ts`
     - **Property 5: Neighborhood never changes matching**
     - **Validates: Requirements 3.9, 16.4, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.14 Write property test for graph invariants in `tests/property/graph.property.test.ts`
+  - [x] 2.14 Write property test for graph invariants in `tests/property/graph.property.test.ts`
     - **Property 6: Graph structural invariants and reference integrity**
     - **Validates: Requirements 3.1, 3.8, 5.1, 5.2, 5.3, 5.5, 5.11, 16.6, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.15 Write property test for dimension derivation in `tests/property/graph.property.test.ts`
+  - [x] 2.15 Write property test for dimension derivation in `tests/property/graph.property.test.ts`
     - **Property 7: Dimension derivation**
     - **Validates: Requirements 6.2, 6.3, 6.4, 6.6, 6.7, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.16 Write property test for dimension independence in `tests/property/graph.property.test.ts`
+  - [x] 2.16 Write property test for dimension independence in `tests/property/graph.property.test.ts`
     - **Property 8: Dimensions are independent**
     - **Validates: Requirements 6.1, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.17 Write property test for handoff selection in `tests/property/graph.property.test.ts`
+  - [x] 2.17 Write property test for handoff selection in `tests/property/graph.property.test.ts`
     - **Property 9: Handoff target selection**
     - **Validates: Requirements 4.6, 7.8, 7.9, 7.10, 16.13**
     - Done when: `npx vitest --run tests/property/graph.property.test.ts` passes with `numRuns: 100` per property.
-  - [ ] 2.18 Implement `buildHandoffPacket` in `src/lib/rules/handoff.ts`
+  - [x] 2.18 Implement `buildHandoffPacket` in `src/lib/rules/handoff.ts`
     - Takes `today` as a parameter; `unknownFacts` lists missing, `unknown`, and unconfirmed required facts with their state; leaves out `neighborhood`; no Model_Adapter import
     - Add `tests/unit/handoff.test.ts`: demo persona packet after confirmation (utility's `received_shutoff_notice` listed as `unknown`, never `false`; `generatedAt` equals the passed date)
     - _Requirements: 13.1, 13.3_
@@ -148,7 +148,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - **Validates: Requirements 8.6, 16.13**
     - Done when: `npx vitest --run tests/property/explain.property.test.ts` passes with `numRuns: 100` per property.
 
-  - [ ] 2.25 Implement `evaluateBridge` in `src/lib/rules/bridge.ts`
+  - [x] 2.25 Implement `evaluateBridge` in `src/lib/rules/bridge.ts`
     - Pure pipeline: `splitFacts` → `evaluatePrograms` → `buildGraph` → `validateGraph` → evidence dedupe → `buildHandoffPacket`; returns the first failing stage's errors and no partial result
     - Returns `Result<BridgeEvaluationResult, BridgeError>`; no `@/lib/model` import
     - Add `tests/unit/bridge.test.ts`: demo persona with all facts confirmed (order RAFT, SNAP, UTIL; `E-ID` reused by three actions; handoff `generatedAt` equals the passed date), one failing case per `BridgeError` kind, and a deep-freeze test proving inputs and output are not mutated

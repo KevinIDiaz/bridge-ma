@@ -1,0 +1,123 @@
+{
+  "version": 2,
+  "fictionalDemo": true,
+  "sources": [
+    {
+      "id": "S-SNAP-01",
+      "programId": "snap",
+      "publisher": "MA Department of Transitional Assistance",
+      "title": "SNAP eligibility and application",
+      "url": null,
+      "retrieved": null,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "S-RAFT-01",
+      "programId": "raft",
+      "publisher": "MA Executive Office of Housing and Livable Communities",
+      "title": "RAFT program overview",
+      "url": null,
+      "retrieved": null,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "S-UTIL-01",
+      "programId": "utility",
+      "publisher": "MA Department of Public Utilities",
+      "title": "Shutoff protections",
+      "url": null,
+      "retrieved": null,
+      "reviewStatus": "unreviewed"
+    }
+  ],
+  "programs": [
+    { "id": "snap", "sourceIds": ["S-SNAP-01"] },
+    { "id": "raft", "sourceIds": ["S-RAFT-01"] },
+    { "id": "utility", "sourceIds": ["S-UTIL-01"] }
+  ],
+  "facts": [
+    { "id": "preferred_language", "kind": "choice", "options": ["en", "es"] },
+    { "id": "city", "kind": "text" },
+    { "id": "neighborhood", "kind": "text", "areaContext": true },
+    { "id": "household_size", "kind": "number", "min": 1, "max": 20 },
+    { "id": "single_parent", "kind": "boolean" },
+    { "id": "lives_in_ma", "kind": "boolean" },
+    { "id": "lost_job_recently", "kind": "boolean" },
+    { "id": "rents_home", "kind": "boolean" },
+    { "id": "received_notice_to_quit", "kind": "boolean" },
+    { "id": "has_utility_account", "kind": "boolean" },
+    { "id": "received_shutoff_notice", "kind": "boolean" }
+  ],
+  "rules": [
+    {
+      "id": "R-SNAP",
+      "version": 1,
+      "programId": "snap",
+      "sourceIds": ["S-SNAP-01"],
+      "synthetic": true,
+      "predicates": [
+        { "id": "P-SNAP-MA", "factId": "lives_in_ma", "op": "equals", "value": true },
+        { "id": "P-SNAP-JOB", "factId": "lost_job_recently", "op": "equals", "value": true }
+      ],
+      "urgencyTriggerFactId": null,
+      "deadline": null
+    },
+    {
+      "id": "R-RAFT",
+      "version": 1,
+      "programId": "raft",
+      "sourceIds": ["S-RAFT-01"],
+      "synthetic": true,
+      "predicates": [
+        { "id": "P-RAFT-MA", "factId": "lives_in_ma", "op": "equals", "value": true },
+        { "id": "P-RAFT-RENT", "factId": "rents_home", "op": "equals", "value": true },
+        { "id": "P-RAFT-NTQ", "factId": "received_notice_to_quit", "op": "equals", "value": true }
+      ],
+      "urgencyTriggerFactId": "received_notice_to_quit",
+      "deadline": null
+    },
+    {
+      "id": "R-UTIL",
+      "version": 1,
+      "programId": "utility",
+      "sourceIds": ["S-UTIL-01"],
+      "synthetic": true,
+      "predicates": [
+        { "id": "P-UTIL-MA", "factId": "lives_in_ma", "op": "equals", "value": true },
+        { "id": "P-UTIL-ACCT", "factId": "has_utility_account", "op": "equals", "value": true },
+        { "id": "P-UTIL-SHUT", "factId": "received_shutoff_notice", "op": "equals", "value": true }
+      ],
+      "urgencyTriggerFactId": "received_shutoff_notice",
+      "deadline": null
+    }
+  ],
+  "actions": [
+    { "id": "A-SNAP", "programId": "snap", "ruleId": "R-SNAP", "nextStepKey": "nextStep.snap", "humanHelp": "program_office" },
+    { "id": "A-RAFT", "programId": "raft", "ruleId": "R-RAFT", "nextStepKey": "nextStep.raft", "humanHelp": "legal_aid" },
+    { "id": "A-UTIL", "programId": "utility", "ruleId": "R-UTIL", "nextStepKey": "nextStep.utility", "humanHelp": "general_help_line" }
+  ],
+  "evidenceTypes": [
+    { "id": "E-ID" },
+    { "id": "E-JOB-LOSS" },
+    { "id": "E-HOUSEHOLD" },
+    { "id": "E-NTQ" },
+    { "id": "E-LEASE" },
+    { "id": "E-UTIL-BILL" }
+  ],
+  "evidenceRequirements": [
+    { "actionId": "A-SNAP", "evidenceTypeId": "E-ID", "level": "required" },
+    { "actionId": "A-SNAP", "evidenceTypeId": "E-JOB-LOSS", "level": "required" },
+    { "actionId": "A-SNAP", "evidenceTypeId": "E-HOUSEHOLD", "level": "helpful" },
+    { "actionId": "A-RAFT", "evidenceTypeId": "E-ID", "level": "required" },
+    { "actionId": "A-RAFT", "evidenceTypeId": "E-NTQ", "level": "required" },
+    { "actionId": "A-RAFT", "evidenceTypeId": "E-LEASE", "level": "required" },
+    { "actionId": "A-RAFT", "evidenceTypeId": "E-JOB-LOSS", "level": "helpful" },
+    { "actionId": "A-UTIL", "evidenceTypeId": "E-ID", "level": "required" },
+    { "actionId": "A-UTIL", "evidenceTypeId": "E-UTIL-BILL", "level": "required" },
+    { "actionId": "A-UTIL", "evidenceTypeId": "E-JOB-LOSS", "level": "helpful" }
+  ],
+  "edges": [
+    { "from": "A-RAFT", "to": "A-SNAP", "reasonKey": "edge.housing_first" },
+    { "from": "A-RAFT", "to": "A-UTIL", "reasonKey": "edge.housing_first" }
+  ]
+}
