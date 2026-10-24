@@ -2,9 +2,10 @@
 
 // Step 3: three action cards in graph order (Req 7). Presents the BridgeEvaluationResult as given.
 import { useMemo } from "react";
+import Link from "next/link";
 import { ActionCard } from "@/components/ActionCard";
 import { getDictionary, type Locale } from "@/lib/i18n";
-import { localizeActionCards } from "@/lib/i18n/localize";
+import { localizeActionCards, localizeEvidence } from "@/lib/i18n/localize";
 import { NoSessionNotice, StepTitle, useExplanations, useJourneyState } from "./journeyAdapter";
 import { JourneyErrorNotice, StepNav } from "./StepParts";
 
@@ -18,6 +19,13 @@ export function ActionsStep({ lang }: { lang: Locale }) {
     [state, dict, lang],
   );
   const explanations = useExplanations(result, lang);
+  const evidence = useMemo(
+    () =>
+      state.kind === "ok"
+        ? localizeEvidence(dict, state.result.evidence, state.result.graph.nodes)
+        : [],
+    [state, dict],
+  );
 
   return (
     <>
@@ -35,10 +43,26 @@ export function ActionsStep({ lang }: { lang: Locale }) {
               <ActionCard key={card.id} card={card} dict={dict} explanation={explanations[card.id]} />
             ))}
           </div>
+
+          <section className="reusable-documents" aria-labelledby="documents-title">
+            <p className="eyebrow">{dict.common.appName}</p>
+            <h2 id="documents-title">{t.documentsTitle}</h2>
+            <p>{t.documentsIntro}</p>
+            <ul className="document-chip-list">
+              {evidence.map((row) => (
+                <li key={row.evidenceTypeId} data-evidence-id={row.evidenceTypeId}>
+                  <strong>{row.label}</strong>
+                  {row.reuseText ? <span>{row.reuseText}</span> : null}
+                </li>
+              ))}
+            </ul>
+            <Link href={`/${lang}/handoff`} className="button-primary">
+              {t.printHandoff}
+            </Link>
+          </section>
           <StepNav
             lang={lang}
             back={{ href: "/confirm", label: t.back }}
-            next={{ href: "/documents", label: t.next }}
           />
         </>
       )}

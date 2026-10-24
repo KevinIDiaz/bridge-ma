@@ -20,18 +20,18 @@ describe("buildGraph", () => {
     if (!result.ok) return;
     const g = result.value;
     expect(g.nodes.map((n) => [n.id, n.status, n.urgency, n.sourceFreshness, n.factConfirmation])).toEqual([
-      ["A-RAFT", "may_match", "urgent", "unreviewed", "all_confirmed"],
-      ["A-SNAP", "may_match", "standard", "unreviewed", "all_confirmed"],
-      ["A-UTIL", "cant_tell", "unknown", "unreviewed", "has_missing"],
+      ["A-RAFT", "may_match", "urgent", "reviewed", "all_confirmed"],
+      ["A-SNAP", "may_match", "standard", "reviewed", "all_confirmed"],
+      ["A-UTIL", "cant_tell", "unknown", "reviewed", "has_missing"],
     ]);
     for (const n of g.nodes) {
-      expect(n.deadline).toEqual({ kind: "unknown", reason: "source_unreviewed" });
+      expect(n.deadline).toEqual({ kind: "unknown", reason: "unsupported" });
       expect(n.explanationOrigin).toBe("rule_based");
     }
     expect(g.nodes.map((n) => n.handoff)).toEqual([
-      { kind: "human", option: "legal_aid" },
-      { kind: "human", option: "program_office" },
-      { kind: "human", option: "general_help_line" },
+      expect.objectContaining({ kind: "portal", sourceId: "S-RAFT-01" }),
+      expect.objectContaining({ kind: "portal", sourceId: "S-SNAP-01" }),
+      expect.objectContaining({ kind: "portal", sourceId: "S-UTIL-01" }),
     ]);
     expect(g.edges.map((e) => [e.from, e.to])).toEqual([
       ["A-RAFT", "A-SNAP"],

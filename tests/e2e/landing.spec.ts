@@ -24,7 +24,7 @@ test("Start goes to step 1 placeholder in the same language", async ({ page }) =
   await page.goto("/es");
   await page.getByRole("link", { name: "Comenzar" }).click();
   await expect(page).toHaveURL(/\/es\/story$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Cuente su historia" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Cuéntele a Bridge lo que está pasando" })).toBeVisible();
 });
 
 test("unsupported locale returns 404", async ({ page }) => {

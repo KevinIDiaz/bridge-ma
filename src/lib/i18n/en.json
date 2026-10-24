@@ -23,10 +23,30 @@
     "back": "Back to home"
   },
   "intake": {
-    "stepLabel": "Step 1 of 6",
-    "title": "Tell your story",
-    "intro": "Answer what you can. You can choose “I don’t know” for anything you are not sure about.",
-    "fictionalNotice": "This is fictional demo data. Please do not enter real personal information.",
+    "stepLabel": "Step 1 of 3",
+    "title": "Tell Bridge what is happening",
+    "intro": "Use your own words. Bridge listens for needs across food, housing, and utilities, then asks only the questions that matter.",
+    "welcome": "Hi, I’m Bridge. Tell me what changed and what feels most urgent. You do not need to know which agency or program to ask for.",
+    "fictionalNotice": "Use fictional information in this demo. Do not enter names, exact addresses, Social Security numbers, account numbers, or medical records.",
+    "privacyTitle": "Your privacy:",
+    "conversationLabel": "Conversation with Bridge",
+    "bridgeSpeaker": "Bridge",
+    "youSpeaker": "You",
+    "messageLabel": "Describe what is happening",
+    "placeholder": "Example: I live in Boston, lost my job, and I am worried about rent…",
+    "send": "Send to Bridge",
+    "voice": "Speak instead",
+    "listening": "Listening…",
+    "voiceUnavailable": "Voice input is not available in this browser. You can type your answer instead.",
+    "thinking": "Finding the important details…",
+    "assistantError": "Bridge could not process that message. Your text was not lost; please try again.",
+    "understood": "What Bridge understood",
+    "noFacts": "Share a little about your situation and the details Bridge hears will appear here.",
+    "understoodNote": "Nothing here is an eligibility decision. You will check every detail before Bridge builds a plan.",
+    "liveMode": "AI-assisted intake",
+    "demoMode": "Reliable demo assistant",
+    "review": "Review what Bridge heard",
+    "demoStory": "I am a single parent living in Boston with my child. I recently lost my job, rent my home, and received a Notice to Quit. The utility account is in my name, but I do not know whether I received a formal shutoff notice. I prefer Spanish.",
     "dontKnow": "I don’t know",
     "useDemo": "Use fictional demo story",
     "submit": "Review my answers",
@@ -34,15 +54,17 @@
     "requiredNote": "No field is required. Anything left blank is treated as “unknown.”"
   },
   "confirm": {
-    "stepLabel": "Step 2 of 6",
-    "title": "Confirm your facts",
-    "intro": "Check each answer. Confirm the ones that are right, or edit any that are wrong. Nothing is used until you confirm it.",
+    "stepLabel": "Step 2 of 3",
+    "title": "Check what Bridge understood",
+    "intro": "Correct anything that is wrong. “I don’t know” is a valid answer, and Bridge will keep that uncertainty visible.",
     "confirm": "Confirm",
     "confirmed": "Confirmed",
     "edit": "Edit",
     "save": "Save",
     "cancel": "Cancel",
-    "unconfirmedNotice": "You still have {count} fact(s) to confirm before your next steps are complete.",
+    "confirmAll": "Everything looks right — build my plan",
+    "editHint": "Need to fix something? Edit only that line, then build your plan.",
+    "unconfirmedNotice": "Bridge found {count} detail(s) for you to review below.",
     "allConfirmedNotice": "All facts confirmed. You can continue to your next steps.",
     "areaContextNote": "Neighborhood is area context only. It never affects whether a program matches.",
     "continue": "See my next steps",
@@ -67,7 +89,7 @@
   },
   "confirmation": {
     "confirmed": "Confirmed",
-    "unconfirmed": "Not confirmed yet"
+    "unconfirmed": "Ready for your review"
   },
   "facts": {
     "preferred_language": "Preferred language",
@@ -95,9 +117,9 @@
     "error": "Something went wrong while preparing your next steps, so no results are shown. Please ask a person for help: legal aid, a program office, or a general help line."
   },
   "actions": {
-    "stepLabel": "Step 3 of 6",
-    "title": "Your next actions",
-    "intro": "These actions come from demo rules and the answers you confirmed. The most urgent action is first.",
+    "stepLabel": "Step 3 of 3",
+    "title": "Your Bridge action plan",
+    "intro": "Bridge connected your confirmed story to three Massachusetts pathways. Start at the top; uncertainty stays visible.",
     "why": "Why this appeared",
     "facts": "Answers this rule needs",
     "missing": "Missing",
@@ -110,7 +132,11 @@
     "evidence": "Documents for this action",
     "reusedBy": "Also used for: {programs}",
     "notReused": "Only used for this action.",
-    "sources": "Sources",
+    "sources": "Official Massachusetts sources",
+    "technicalDetails": "How Bridge reached this result",
+    "documentsTitle": "Gather once, use for more than one action",
+    "documentsIntro": "Bridge keeps one reusable checklist so you do not have to reconstruct the same story for every agency.",
+    "printHandoff": "Open bilingual handoff and print",
     "ruleLine": "Rule {ruleId}, version {ruleVersion}, fixture version {fixtureVersion}",
     "deadline": "Deadline",
     "back": "Back: Confirm your answers",
@@ -220,9 +246,9 @@
     "helpful": "Helpful"
   },
   "nextStep": {
-    "snap": "Ask the SNAP program office how to apply. Bring the documents listed below.",
-    "raft": "Talk to legal aid about your notice, and ask about RAFT housing help.",
-    "utility": "Call a general help line and ask about protection from a utility shutoff."
+    "snap": "Start a SNAP application through DTA Connect or call DTA. You may begin with your name, address (if any), and signature; DTA will tell you which verifications it still needs.",
+    "raft": "Start in the Massachusetts Housing Help Hub. Tell your landlord or property manager they must complete their part, and ask legal aid about the Notice to Quit.",
+    "utility": "Call your utility company first and ask for shutoff protection. If service is not protected or restored after that call, contact the Massachusetts Department of Public Utilities."
   },
   "reason": {
     "R-SNAP": {
@@ -259,8 +285,8 @@
     }
   },
   "explanation": {
-    "generated": "Generated explanation",
-    "ruleBased": "Rule-based explanation (template)"
+    "generated": "Personalized plain-language explanation",
+    "ruleBased": "What this means"
   },
   "edge": {
     "housing_first": "Keeping your housing comes first."

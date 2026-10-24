@@ -28,7 +28,7 @@ describe("buildHandoffPacket", () => {
       { ruleId: "R-SNAP", version: 1 },
       { ruleId: "R-UTIL", version: 1 },
     ]);
-    expect(p.handoffTargets.map((t) => t.target.kind)).toEqual(["human", "human", "human"]);
+    expect(p.handoffTargets.map((t) => t.target.kind)).toEqual(["portal", "portal", "portal"]);
     expect(p.evidence[0]).toEqual({
       evidenceTypeId: "E-ID",
       uses: [

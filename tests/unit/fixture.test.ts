@@ -9,6 +9,14 @@ const codes = (input: unknown) => {
   return r.ok ? [] : r.errors;
 };
 
+const markSourcesUnreviewed = (fixture: ReturnType<typeof clone>) => {
+  for (const source of fixture.sources) {
+    source.reviewStatus = "unreviewed";
+    source.url = null;
+    source.retrieved = null;
+  }
+};
+
 describe("programs.v2.json fixture", () => {
   it("parses ok and covers exactly SNAP, RAFT, and utility protection", () => {
     expect(fixtureResult.ok).toBe(true);
@@ -16,7 +24,7 @@ describe("programs.v2.json fixture", () => {
     expect(fixtureResult.value.version).toBe(2);
     expect(fixtureResult.value.programs.map((p) => p.id).sort()).toEqual([...programIds].sort());
     expect(fixtureResult.value.rules.every((r) => r.synthetic && r.deadline === null)).toBe(true);
-    expect(fixtureResult.value.sources.every((s) => s.reviewStatus === "unreviewed" && s.url === null)).toBe(true);
+    expect(fixtureResult.value.sources.every((s) => s.reviewStatus === "reviewed" && s.url?.startsWith("https://www.mass.gov/"))).toBe(true);
   });
 
   it("rejects a rule citing an unknown source, naming the rule and source", () => {
@@ -27,6 +35,7 @@ describe("programs.v2.json fixture", () => {
 
   it("rejects synthetic:false with an unreviewed source, listing each such source", () => {
     const bad = clone();
+    markSourcesUnreviewed(bad);
     bad.rules[1].synthetic = false;
     expect(codes(bad)).toContainEqual({ code: "nonsynthetic_unreviewed_source", ids: ["R-RAFT", "S-RAFT-01"] });
   });
@@ -76,12 +85,14 @@ describe("programs.v2.json fixture", () => {
       ["a YYYY-MM-DD date", (f: ReturnType<typeof clone>) => (f.rules[2].predicates[0].id = "P-2026-01-31")],
     ])("rejects %s", (_label, mutate) => {
       const bad = clone();
+      markSourcesUnreviewed(bad);
       mutate(bad);
       expect(codes(bad).map((e) => e.code)).toContain("policy_number_without_reviewed_source");
     });
 
     it("rejects a deadline on a rule with an unreviewed source", () => {
       const bad = clone();
+      markSourcesUnreviewed(bad);
       bad.facts.push({ id: "notice_date", kind: "date" });
       bad.rules[1].deadline = { kind: "offset_from_date_fact", factId: "notice_date", offsetDays: 1 };
       expect(codes(bad).map((e) => e.code)).toContain("deadline_without_reviewed_source");
@@ -89,6 +100,7 @@ describe("programs.v2.json fixture", () => {
 
     it("rejects a numeric predicate on a rule with an unreviewed source", () => {
       const bad = clone();
+      markSourcesUnreviewed(bad);
       bad.rules[0].predicates.push({ id: "P-SNAP-HH", factId: "household_size", op: "equals", value: 3 });
       expect(codes(bad).map((e) => e.code)).toContain("number_without_reviewed_source");
     });

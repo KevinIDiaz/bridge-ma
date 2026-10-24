@@ -23,10 +23,30 @@
     "back": "Volver al inicio"
   },
   "intake": {
-    "stepLabel": "Paso 1 de 6",
-    "title": "Cuente su historia",
-    "intro": "Responda lo que pueda. Puede elegir “No lo sé” para cualquier cosa de la que no esté seguro.",
-    "fictionalNotice": "Estos son datos de demostración ficticios. Por favor, no ingrese información personal real.",
+    "stepLabel": "Paso 1 de 3",
+    "title": "Cuéntele a Bridge lo que está pasando",
+    "intro": "Use sus propias palabras. Bridge identifica necesidades de comida, vivienda y servicios públicos, y hace solo las preguntas importantes.",
+    "welcome": "Hola, soy Bridge. Cuénteme qué cambió y qué es lo más urgente. No necesita saber a qué agencia o programa pedir ayuda.",
+    "fictionalNotice": "Use información ficticia en esta demostración. No ingrese nombres, direcciones exactas, números de Seguro Social, números de cuenta ni expedientes médicos.",
+    "privacyTitle": "Su privacidad:",
+    "conversationLabel": "Conversación con Bridge",
+    "bridgeSpeaker": "Bridge",
+    "youSpeaker": "Usted",
+    "messageLabel": "Describa lo que está pasando",
+    "placeholder": "Ejemplo: Vivo en Boston, perdí mi empleo y me preocupa el alquiler…",
+    "send": "Enviar a Bridge",
+    "voice": "Hablar en vez de escribir",
+    "listening": "Escuchando…",
+    "voiceUnavailable": "La entrada de voz no está disponible en este navegador. Puede escribir su respuesta.",
+    "thinking": "Identificando los detalles importantes…",
+    "assistantError": "Bridge no pudo procesar ese mensaje. Su texto no se perdió; inténtelo de nuevo.",
+    "understood": "Lo que Bridge entendió",
+    "noFacts": "Cuente un poco sobre su situación y los detalles que Bridge identifique aparecerán aquí.",
+    "understoodNote": "Nada de esto es una decisión de elegibilidad. Usted revisará cada detalle antes de que Bridge prepare un plan.",
+    "liveMode": "Entrevista asistida por IA",
+    "demoMode": "Asistente de demostración confiable",
+    "review": "Revisar lo que Bridge entendió",
+    "demoStory": "Soy madre soltera y vivo en Boston con mi hijo. Perdí mi empleo recientemente, alquilo mi vivienda y recibí un Notice to Quit. La cuenta de servicios está a mi nombre, pero no sé si recibí un aviso formal de corte. Prefiero español.",
     "dontKnow": "No lo sé",
     "useDemo": "Usar historia ficticia de demostración",
     "submit": "Revisar mis respuestas",
@@ -34,15 +54,17 @@
     "requiredNote": "Ningún campo es obligatorio. Lo que deje en blanco se tratará como “no lo sé”."
   },
   "confirm": {
-    "stepLabel": "Paso 2 de 6",
-    "title": "Confirme sus datos",
-    "intro": "Revise cada respuesta. Confirme las que sean correctas o edite las que estén mal. Nada se usa hasta que usted lo confirme.",
+    "stepLabel": "Paso 2 de 3",
+    "title": "Revise lo que Bridge entendió",
+    "intro": "Corrija cualquier error. “No lo sé” es una respuesta válida y Bridge mantendrá visible esa incertidumbre.",
     "confirm": "Confirmar",
     "confirmed": "Confirmado",
     "edit": "Editar",
     "save": "Guardar",
     "cancel": "Cancelar",
-    "unconfirmedNotice": "Todavía le quedan {count} dato(s) por confirmar antes de completar sus próximos pasos.",
+    "confirmAll": "Todo está correcto — crear mi plan",
+    "editHint": "¿Necesita corregir algo? Edite solo esa línea y luego cree su plan.",
+    "unconfirmedNotice": "Bridge encontró {count} dato(s) para que los revise abajo.",
     "allConfirmedNotice": "Todos los datos están confirmados. Puede continuar a sus próximos pasos.",
     "areaContextNote": "El vecindario es solo contexto de área. Nunca afecta si un programa coincide.",
     "continue": "Ver mis próximos pasos",
@@ -67,7 +89,7 @@
   },
   "confirmation": {
     "confirmed": "Confirmado",
-    "unconfirmed": "Aún no confirmado"
+    "unconfirmed": "Listo para su revisión"
   },
   "facts": {
     "preferred_language": "Idioma preferido",
@@ -95,9 +117,9 @@
     "error": "Algo salió mal al preparar sus próximos pasos, así que no se muestran resultados. Pida ayuda a una persona: asistencia legal, una oficina del programa o una línea general de ayuda."
   },
   "actions": {
-    "stepLabel": "Paso 3 de 6",
-    "title": "Sus próximas acciones",
-    "intro": "Estas acciones salen de reglas de demostración y de las respuestas que usted confirmó. La acción más urgente va primero.",
+    "stepLabel": "Paso 3 de 3",
+    "title": "Su plan de acción de Bridge",
+    "intro": "Bridge conectó su historia confirmada con tres opciones de Massachusetts. Empiece arriba; la incertidumbre siempre permanece visible.",
     "why": "Por qué aparece",
     "facts": "Respuestas que necesita esta regla",
     "missing": "Faltan",
@@ -110,7 +132,11 @@
     "evidence": "Documentos para esta acción",
     "reusedBy": "También sirve para: {programs}",
     "notReused": "Solo sirve para esta acción.",
-    "sources": "Fuentes",
+    "sources": "Fuentes oficiales de Massachusetts",
+    "technicalDetails": "Cómo llegó Bridge a este resultado",
+    "documentsTitle": "Reúna una vez y use para más de una acción",
+    "documentsIntro": "Bridge mantiene una sola lista reutilizable para que no tenga que reconstruir la misma historia para cada agencia.",
+    "printHandoff": "Abrir resumen bilingüe e imprimir",
     "ruleLine": "Regla {ruleId}, versión {ruleVersion}, versión de datos {fixtureVersion}",
     "deadline": "Fecha límite",
     "back": "Atrás: Confirme sus respuestas",
@@ -220,9 +246,9 @@
     "helpful": "Útil"
   },
   "nextStep": {
-    "snap": "Pregunte en la oficina del programa SNAP cómo hacer la solicitud. Lleve los documentos de la lista.",
-    "raft": "Hable con la asistencia legal sobre su aviso y pregunte por la ayuda de vivienda RAFT.",
-    "utility": "Llame a una línea general de ayuda y pregunte por la protección contra un corte de servicios públicos."
+    "snap": "Inicie una solicitud de SNAP en DTA Connect o llame a DTA. Puede comenzar con su nombre, dirección (si tiene) y firma; DTA le dirá qué verificaciones faltan.",
+    "raft": "Comience en el portal Housing Help Hub de Massachusetts. Avise al propietario o administrador que debe completar su parte y consulte a la asistencia legal sobre el Notice to Quit.",
+    "utility": "Llame primero a la compañía de servicios y pida protección contra el corte. Si el servicio no queda protegido o restaurado después de esa llamada, comuníquese con el Departamento de Servicios Públicos de Massachusetts."
   },
   "reason": {
     "R-SNAP": {
@@ -259,8 +285,8 @@
     }
   },
   "explanation": {
-    "generated": "Explicación generada",
-    "ruleBased": "Explicación basada en reglas (plantilla)"
+    "generated": "Explicación personalizada en lenguaje sencillo",
+    "ruleBased": "Qué significa esto"
   },
   "edge": {
     "housing_first": "Conservar su vivienda va primero."

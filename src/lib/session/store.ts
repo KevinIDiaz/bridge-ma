@@ -63,6 +63,14 @@ function confirmFact(id: FactId): void {
   emit();
 }
 
+/** Confirms the complete resident-reviewed snapshot in one explicit action. */
+function confirmAllFacts(): void {
+  if (!state.facts) return;
+  const facts = state.facts.map((fact) => ({ ...fact, confirmation: "confirmed" as const }));
+  state = { ...state, facts };
+  emit();
+}
+
 /**
  * Sets a fact's value and resets it to "unconfirmed". Clears cached explanations,
  * because a changed fact can change the graph (Req 2.3, 14.2 via re-confirmation).
@@ -91,6 +99,7 @@ export const session = {
   subscribe,
   setFacts,
   confirmFact,
+  confirmAllFacts,
   updateFact,
   setExplanation,
 };

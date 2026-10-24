@@ -15,7 +15,7 @@ test("switching language on step 3 is a soft navigation and keeps IDs, decisions
   await page.getByRole("navigation", { name: "Language" }).getByRole("link", { name: "Español" }).click();
   await expect(page).toHaveURL(/\/es\/actions$/);
   await expect(page.locator("html")).toHaveAttribute("lang", "es");
-  await expect(page.getByRole("heading", { level: 1, name: "Sus próximas acciones" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Su plan de acción de Bridge" })).toBeVisible();
   expect(await page.evaluate(() => (window as MarkedWindow).__bridgeMarker)).toBe(1);
   expect(await cardStructure(page)).toEqual(before);
 

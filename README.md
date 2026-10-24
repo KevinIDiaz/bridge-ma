@@ -7,10 +7,12 @@ Bridge MA helps a Massachusetts resident turn a crisis into a sourced sequence o
 Repo: https://github.com/KevinIDiaz/bridge-ma
 
 ## Journey
-Tell your story → Confirm facts → View three next actions → See reusable documents → Understand uncertainty / human help → Print bilingual handoff.
+Tell your story in your own words → Review what Bridge understood once → Follow a prioritized action plan with reusable documents and a bilingual handoff.
 
 ## Status
-All six journey steps work end to end in English and Spanish on `main`. The deterministic rules engine and action graph sit behind `evaluateBridge` (`src/lib/rules/bridge.ts`); the shared contract is `src/lib/rules/types.ts`. Every source is still `unreviewed`, so every rule is labeled "Demo rule" and no deadline is shown. Submission is this repo plus a video demo of a local production build (D-108).
+The primary three-step journey works end to end in English and Spanish. A server-side conversational assistant extracts proposed facts from natural language and asks one useful follow-up at a time; with no API key it automatically uses a deterministic bilingual demo extractor. The deterministic rules engine and action graph remain behind `evaluateBridge` (`src/lib/rules/bridge.ts`), and model output never decides matching, urgency, order, or deadlines.
+
+The three official Massachusetts source pages were reviewed on 2026-10-24 and are linked from each action. The matching rules remain intentionally simplified and carry a visible "Demo rule" label. Submission is this repo plus a video demo of a local production build (D-108).
 
 ## Team workflow
 Three developers work in parallel. Roles, branches, owned paths, and task IDs are in `.kiro/steering/team.md` (loaded by every Kiro agent); the full plan is `docs/team-assignments.md`. Tell your Kiro agent your role (Lead, Teammate 1, or Teammate 2) at the start of a session. Contract files (`src/lib/rules/types.ts`, the fixture schema) change only with Lead approval.
@@ -26,6 +28,16 @@ npm ci
 npx playwright install chromium   # only needed for e2e tests
 npm run dev                       # http://localhost:3000 -> redirects to /en
 ```
+
+Optional live AI intake:
+
+```powershell
+Copy-Item .env.example .env.local
+# Add OPENAI_API_KEY to .env.local. Never commit it.
+npm run dev
+```
+
+Without `OPENAI_API_KEY`, the same UI and full demo flow use the deterministic fallback. `OPENAI_MODEL` defaults to `gpt-4o-mini` and can be changed to another Responses API model with Structured Outputs support.
 
 ## Scripts
 | Script | What it does |
@@ -43,10 +55,12 @@ npm run dev                       # http://localhost:3000 -> redirects to /en
 
 ## Layout
 ```
-src/app/[lang]/        routes for en and es (landing, story, confirm, actions, documents, help, handoff)
+src/app/[lang]/        EN/ES routes; story, confirm, actions are the primary journey
+src/app/api/assistant/ server-only conversational intake endpoint
 src/lib/session/       in-memory session store and input validation
 src/components/steps/  one client component per journey step
 src/components/        React components
+src/lib/assistant/     structured LLM adapter, validation, and deterministic fallback
 src/lib/i18n/          en.json, es.json, locale helpers
 src/lib/data/          fixture types and validating loader
 src/lib/rules/         deterministic domain code (engine, deadlines, graph, validator, handoff, evaluateBridge)
@@ -54,7 +68,7 @@ src/lib/model/         model adapter interface + deterministic demo fallback
 src/fixtures/          versioned JSON (programs.v2.json)
 tests/unit|property|e2e
 ```
-Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapter, React, or Next (ESLint enforced). No database, authentication, analytics, or production AI provider.
+Domain code in `src/lib/rules` and `src/lib/data` may not import the assistant, model adapter, React, or Next (ESLint enforced). There is no database, authentication, analytics, or persistence. The optional provider call is server-only, uses Structured Outputs, sends no data unless the resident submits a message, and falls back safely on errors or timeouts.
 
 ## Environment notes
 - Line endings are LF for every file (`.gitattributes`).

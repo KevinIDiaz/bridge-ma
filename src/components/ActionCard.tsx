@@ -33,21 +33,14 @@ export function ActionCard({
       data-fixture-version={card.fixtureVersion}
       data-deadline={card.deadline.kind === "computed" ? card.deadline.date : `unknown:${card.deadline.reason}`}
     >
-      <h2 id={headingId}>{card.title}</h2>
+      <div className="action-card-heading">
+        <span className="action-number" aria-hidden="true" />
+        <div>
+          <p className="action-status">{card.statusLabel}</p>
+          <h2 id={headingId}>{card.title}</h2>
+        </div>
+      </div>
       {card.syntheticLabel ? <p className="badge badge-synthetic">{card.syntheticLabel}</p> : null}
-
-      <section className="rule-result" aria-label={card.ruleBasedLabel}>
-        <h3>{card.ruleBasedLabel}</h3>
-        <p className="status-line">
-          <strong>{card.statusLabel}</strong>
-        </p>
-        <p className="rule-line">{card.ruleLine}</p>
-        <p className="deadline-line">
-          {t.deadline}: {card.deadlineText}
-        </p>
-      </section>
-
-      <DimensionList dimensions={card.dimensions} />
 
       <section>
         <h3>{t.why}</h3>
@@ -62,59 +55,12 @@ export function ActionCard({
         </section>
       ) : null}
 
-      <section>
-        <h3>{t.facts}</h3>
-        {card.noneMissing ? (
-          <p>{card.noneMissing}</p>
-        ) : (
-          <>
-            {card.missing.length > 0 ? (
-              <div className="fact-group" data-fact-group="missing">
-                <h4>{t.missing}</h4>
-                <ul>
-                  {card.missing.map((f) => (
-                    <li key={f.factId} data-fact-id={f.factId}>
-                      {f.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-            {card.unconfirmed.length > 0 ? (
-              <div className="fact-group" data-fact-group="unconfirmed">
-                <h4>{t.unconfirmed}</h4>
-                <ul>
-                  {card.unconfirmed.map((f) => (
-                    <li key={f.factId} data-fact-id={f.factId}>
-                      {f.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
-          </>
-        )}
-      </section>
-
       <section className="next-step">
         <h3>{t.nextStep}</h3>
         <p>{card.nextStep}</p>
       </section>
 
-      {card.order.length > 0 ? (
-        <section>
-          <h3>{t.order}</h3>
-          <ul>
-            {card.order.map((o) => (
-              <li key={o.from} data-edge={`${o.from}>${card.id}`}>
-                {o.text}
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <section>
+      <section className="human-handoff">
         <h3>{t.handoff}</h3>
         <p data-handoff-kind={card.handoff.kind}>
           {card.handoff.url ? (
@@ -127,21 +73,84 @@ export function ActionCard({
         </p>
       </section>
 
-      <section>
-        <h3>{t.evidence}</h3>
-        <ul className="evidence-list">
-          {card.evidence.map((e) => (
-            <li key={e.evidenceTypeId} data-evidence-id={e.evidenceTypeId} data-level={e.level}>
-              <strong>{e.label}</strong> ({e.levelLabel}). {e.reuseText}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <details className="decision-details">
+        <summary>{t.technicalDetails}</summary>
+        <section className="rule-result" aria-label={card.ruleBasedLabel}>
+          <h3>{card.ruleBasedLabel}</h3>
+          <p className="status-line">
+            <strong>{card.statusLabel}</strong>
+          </p>
+          <p className="rule-line">{card.ruleLine}</p>
+          <p className="deadline-line">
+            {t.deadline}: {card.deadlineText}
+          </p>
+        </section>
 
-      <section>
-        <h3>{t.sources}</h3>
-        <SourceList sources={card.sources} />
-      </section>
+        <DimensionList dimensions={card.dimensions} />
+
+        <section>
+          <h3>{t.facts}</h3>
+          {card.noneMissing ? (
+            <p>{card.noneMissing}</p>
+          ) : (
+            <>
+              {card.missing.length > 0 ? (
+                <div className="fact-group" data-fact-group="missing">
+                  <h4>{t.missing}</h4>
+                  <ul>
+                    {card.missing.map((f) => (
+                      <li key={f.factId} data-fact-id={f.factId}>
+                        {f.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              {card.unconfirmed.length > 0 ? (
+                <div className="fact-group" data-fact-group="unconfirmed">
+                  <h4>{t.unconfirmed}</h4>
+                  <ul>
+                    {card.unconfirmed.map((f) => (
+                      <li key={f.factId} data-fact-id={f.factId}>
+                        {f.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </>
+          )}
+        </section>
+
+        {card.order.length > 0 ? (
+          <section>
+            <h3>{t.order}</h3>
+            <ul>
+              {card.order.map((o) => (
+                <li key={o.from} data-edge={`${o.from}>${card.id}`}>
+                  {o.text}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <section>
+          <h3>{t.evidence}</h3>
+          <ul className="evidence-list">
+            {card.evidence.map((e) => (
+              <li key={e.evidenceTypeId} data-evidence-id={e.evidenceTypeId} data-level={e.level}>
+                <strong>{e.label}</strong> ({e.levelLabel}). {e.reuseText}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <h3>{t.sources}</h3>
+          <SourceList sources={card.sources} />
+        </section>
+      </details>
     </article>
   );
 }

@@ -45,13 +45,13 @@ describe("ActionCard", () => {
 
   it("labels the explanation by origin and renders its text as escaped plain text, capped at 600 characters", () => {
     const html = render(cards[0], { text: '<a href="https://x.test">click</a>' + "x".repeat(700), origin: "rule_based" });
-    expect(html).toContain("Rule-based explanation (template)");
+    expect(html).toContain("What this means");
     expect(html).not.toContain('<a href="https://x.test">');
     expect(html).toContain("&lt;a href=");
     const text = html.match(/<section class="explanation"[^>]*>.*?<p>(.*?)<\/p>/)?.[1] ?? "";
     const decoded = text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
     expect(decoded.length).toBe(600);
-    expect(render(cards[0], { text: "t", origin: "generated" })).toContain("Generated explanation");
+    expect(render(cards[0], { text: "t", origin: "generated" })).toContain("Personalized plain-language explanation");
   });
 });
 

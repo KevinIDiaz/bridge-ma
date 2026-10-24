@@ -11,6 +11,6 @@ fileMatchPattern: ["tests/**", "**/*.test.ts", "**/*.test.tsx", "vitest.config.*
   - Neighborhood data never changes matching output.
   - Model adapter output never changes matching output.
   - No deadline is emitted without a reviewed source.
-- Playwright: one e2e test for the full six-step journey in EN and ES, including print view.
+- Playwright: one e2e test for the full three-step primary journey in EN and ES, plus print, privacy, keyboard, locale-preservation, desktop, and mobile checks.
 - Tests use fictional fixtures only.
 - Run with `npx vitest --run` and `npx playwright test` (no watch mode).

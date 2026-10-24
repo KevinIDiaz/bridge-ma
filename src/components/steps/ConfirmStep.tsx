@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getDictionary, type Dictionary, type Locale } from "@/lib/i18n";
 import { session } from "@/lib/session/store";
 import { useSession } from "@/components/useSession";
@@ -17,6 +18,7 @@ interface Props {
 const defsById = new Map<string, FactDef>(INTAKE_FACT_DEFS.map((d) => [d.id, d]));
 
 export function ConfirmStep({ lang }: Props) {
+  const router = useRouter();
   const t = getDictionary(lang);
   const { facts } = useSession();
   // RequireSession guarantees facts !== null, but keep a defensive guard.
@@ -45,10 +47,22 @@ export function ConfirmStep({ lang }: Props) {
       <p className="area-context-note" role="note">
         {t.confirm.areaContextNote}
       </p>
-
-      <Link href={`/${lang}/actions`} className="continue-link">
-        {t.confirm.continue}
-      </Link>
+      <p>{t.confirm.editHint}</p>
+      <div className="confirm-primary-actions">
+        <button
+          type="button"
+          className="button-primary"
+          onClick={() => {
+            session.confirmAllFacts();
+            router.push(`/${lang}/actions`);
+          }}
+        >
+          {t.confirm.confirmAll}
+        </button>
+        <Link href={`/${lang}/story`} className="button-secondary">
+          {t.confirm.cancel}
+        </Link>
+      </div>
     </main>
   );
 }
@@ -77,11 +91,6 @@ function FactRow({ fact, dict }: { fact: ResidentFact; dict: Dictionary }) {
         <EditForm def={def} current={fact.value} dict={dict} onDone={() => setEditing(false)} />
       ) : (
         <div className="confirm-row-actions">
-          {fact.confirmation === "unconfirmed" && (
-            <button type="button" onClick={() => session.confirmFact(fact.id)}>
-              {dict.confirm.confirm}
-            </button>
-          )}
           <button type="button" className="secondary" onClick={() => setEditing(true)}>
             {dict.confirm.edit}
           </button>

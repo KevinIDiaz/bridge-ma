@@ -7,27 +7,27 @@
       "programId": "snap",
       "publisher": "MA Department of Transitional Assistance",
       "title": "SNAP eligibility and application",
-      "url": null,
-      "retrieved": null,
-      "reviewStatus": "unreviewed"
+      "url": "https://www.mass.gov/how-to/supplemental-nutrition-assistance-program-snap-formerly-known-as-food-stamps",
+      "retrieved": "2026-10-24",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "S-RAFT-01",
       "programId": "raft",
       "publisher": "MA Executive Office of Housing and Livable Communities",
-      "title": "RAFT program overview",
-      "url": null,
-      "retrieved": null,
-      "reviewStatus": "unreviewed"
+      "title": "Apply for RAFT emergency help for housing costs",
+      "url": "https://www.mass.gov/how-to/apply-for-raft-emergency-help-for-housing-costs",
+      "retrieved": "2026-10-24",
+      "reviewStatus": "reviewed"
     },
     {
       "id": "S-UTIL-01",
       "programId": "utility",
       "publisher": "MA Department of Public Utilities",
       "title": "Shutoff protections",
-      "url": null,
-      "retrieved": null,
-      "reviewStatus": "unreviewed"
+      "url": "https://www.mass.gov/info-details/when-am-i-protected-from-having-my-utilities-shut-off",
+      "retrieved": "2026-10-24",
+      "reviewStatus": "reviewed"
     }
   ],
   "programs": [

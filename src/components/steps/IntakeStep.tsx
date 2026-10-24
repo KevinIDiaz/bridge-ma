@@ -1,294 +1,206 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getDictionary, type Dictionary, type Locale } from "@/lib/i18n";
+import { getDictionary, type Locale } from "@/lib/i18n";
+import { factValueLabel } from "@/lib/i18n/localize";
 import { session } from "@/lib/session/store";
-import { DEMO_FILL, INTAKE_FACT_DEFS } from "@/lib/session/factDefs";
-import { type FieldErrors, validateForm } from "@/lib/session/validation";
-import { demoAdapter } from "@/lib/model/adapter";
+import { INTAKE_FACT_DEFS } from "@/lib/session/factDefs";
+import { validateAssistantTurn } from "@/lib/assistant/validation";
+import type { AssistantMode, ProposedFact } from "@/lib/assistant/types";
 import { StepHeading } from "@/components/StepHeading";
-import type { FactDef, FactValue, ResidentFact, Unknown } from "@/lib/rules/types";
+import type { ResidentFact } from "@/lib/rules/types";
 
 interface Props {
   lang: Locale;
 }
 
-/** Raw string values keyed by fact ID, plus explicit "I don't know" flags. */
-type RawForm = Record<string, string>;
-type UnknownFlags = Record<string, boolean>;
-
-function initialRaw(): RawForm {
-  const raw: RawForm = {};
-  for (const def of INTAKE_FACT_DEFS) raw[def.id] = "";
-  return raw;
+interface Message {
+  id: number;
+  speaker: "assistant" | "resident";
+  text: string;
 }
 
-/** Converts a stored demo value into the raw control value + unknown flag. */
-function demoToControl(def: FactDef, value: FactValue | Unknown): { raw: string; unknown: boolean } {
-  if (value === "unknown") return { raw: "", unknown: true };
-  if (def.kind === "boolean") return { raw: String(value), unknown: false };
-  return { raw: String(value), unknown: false };
+interface SpeechResultEvent {
+  results: { 0: { 0: { transcript: string } } };
 }
+
+interface SpeechRecognitionLike {
+  lang: string;
+  interimResults: boolean;
+  onresult: ((event: SpeechResultEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+}
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
 
 export function IntakeStep({ lang }: Props) {
   const router = useRouter();
   const t = getDictionary(lang);
-  const defs = INTAKE_FACT_DEFS;
+  const [messages, setMessages] = useState<Message[]>([
+    { id: 1, speaker: "assistant", text: t.intake.welcome },
+  ]);
+  const [draft, setDraft] = useState("");
+  const [facts, setFacts] = useState<ProposedFact[]>([]);
+  const [followUp, setFollowUp] = useState("");
+  const [mode, setMode] = useState<AssistantMode>("demo");
+  const [pending, setPending] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [error, setError] = useState("");
 
-  const [raw, setRaw] = useState<RawForm>(initialRaw);
-  const [unknownFlags, setUnknownFlags] = useState<UnknownFlags>({});
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const formRef = useRef<HTMLFormElement>(null);
+  const factMap = useMemo(() => new Map(facts.map((fact) => [fact.id, fact])), [facts]);
 
-  function setField(id: string, value: string): void {
-    setRaw((prev) => ({ ...prev, [id]: value }));
-    // Choosing a concrete value clears the "I don't know" flag for that field.
-    setUnknownFlags((prev) => ({ ...prev, [id]: false }));
+  async function sendMessage(messageOverride?: string): Promise<void> {
+    const message = (messageOverride ?? draft).trim();
+    if (!message || pending) return;
+    setPending(true);
+    setError("");
+    setDraft("");
+    setMessages((current) => [...current, { id: Date.now(), speaker: "resident", text: message }]);
+
+    try {
+      const response = await fetch("/api/assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, locale: lang, currentFacts: facts }),
+      });
+      if (!response.ok) throw new Error("assistant_request_failed");
+      const body: unknown = await response.json();
+      const reportedMode =
+        typeof body === "object" && body !== null && (body as Record<string, unknown>).mode === "live" ? "live" : "demo";
+      const turn = validateAssistantTurn(body, reportedMode);
+      if (!turn) throw new Error("assistant_response_invalid");
+      setFacts(turn.proposedFacts);
+      setFollowUp(turn.followUpQuestion);
+      setMode(turn.mode);
+      const assistantText = [turn.reply, turn.followUpQuestion].filter(Boolean).join(" ");
+      setMessages((current) => [...current, { id: Date.now() + 1, speaker: "assistant", text: assistantText }]);
+    } catch {
+      setError(t.intake.assistantError);
+      setDraft(message);
+    } finally {
+      setPending(false);
+    }
   }
 
-  function setUnknown(id: string, on: boolean): void {
-    setUnknownFlags((prev) => ({ ...prev, [id]: on }));
-    if (on) setRaw((prev) => ({ ...prev, [id]: "" }));
-  }
-
-  function fillDemo(): void {
-    const nextRaw: RawForm = {};
-    const nextUnknown: UnknownFlags = {};
-    for (const def of defs) {
-      const { raw: r, unknown } = demoToControl(def, DEMO_FILL[def.id]);
-      nextRaw[def.id] = r;
-      nextUnknown[def.id] = unknown;
-    }
-    setRaw(nextRaw);
-    setUnknownFlags(nextUnknown);
-    setErrors({});
-  }
-
-  async function handleSubmit(e: React.FormEvent): Promise<void> {
-    e.preventDefault();
-    const result = validateForm(defs, raw, unknownFlags);
-    if (!result.ok) {
-      setErrors(result.errors);
-      focusFirstInvalid(formRef.current, defs, result.errors);
-      return;
-    }
-    setErrors({});
-
-    // Normalize free-text values locally (trim + NFC) before storing. This is
-    // the only use of the model adapter here and it never leaves the browser.
-    const facts: ResidentFact[] = [];
-    for (const def of defs) {
-      let value = result.values[def.id];
-      if ((def.kind === "text" || def.kind === "date") && typeof value === "string") {
-        const normalized = await demoAdapter.normalize(value, lang);
-        value = normalized.text.length === 0 ? "unknown" : normalized.text;
-      }
-      facts.push({ id: def.id, value, confirmation: "unconfirmed", origin: "user" });
-    }
-    session.setFacts(facts);
+  function reviewFacts(): void {
+    const residentFacts: ResidentFact[] = INTAKE_FACT_DEFS.map((def) => ({
+      id: def.id,
+      value: factMap.get(def.id)?.value ?? "unknown",
+      confirmation: "unconfirmed",
+      origin: "user",
+    }));
+    session.setFacts(residentFacts);
     router.push(`/${lang}/confirm`);
   }
 
-  return (
-    <main id="main" className="container">
-      <p className="step-label">{t.intake.stepLabel}</p>
-      <StepHeading>{t.intake.title}</StepHeading>
-      <p>{t.intake.intro}</p>
-
-      <p className="fictional-notice" role="note">
-        {t.intake.fictionalNotice}
-      </p>
-
-      {Object.keys(errors).length > 0 && (
-        <div className="error-summary" role="alert">
-          <p>{t.intake.errorSummaryTitle}</p>
-          <ul>
-            {defs
-              .filter((d) => errors[d.id])
-              .map((d) => (
-                <li key={d.id}>
-                  <a href={`#field-${d.id}`}>
-                    {t.facts[d.id as keyof typeof t.facts]}: {t.errors[errors[d.id]]}
-                  </a>
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
-
-      <form ref={formRef} onSubmit={handleSubmit} noValidate>
-        {defs.map((def) => (
-          <FactControl
-            key={def.id}
-            def={def}
-            dict={t}
-            rawValue={raw[def.id]}
-            unknown={unknownFlags[def.id] ?? false}
-            error={errors[def.id]}
-            onValue={(v) => setField(def.id, v)}
-            onUnknown={(on) => setUnknown(def.id, on)}
-          />
-        ))}
-
-        <div className="intake-actions">
-          <button type="button" onClick={fillDemo} className="secondary">
-            {t.intake.useDemo}
-          </button>
-          <button type="submit">{t.intake.submit}</button>
-        </div>
-        <p className="required-note">{t.intake.requiredNote}</p>
-      </form>
-    </main>
-  );
-}
-
-interface ControlProps {
-  def: FactDef;
-  dict: Dictionary;
-  rawValue: string;
-  unknown: boolean;
-  error?: string;
-  onValue: (value: string) => void;
-  onUnknown: (on: boolean) => void;
-}
-
-function FactControl({ def, dict, rawValue, unknown, error, onValue, onUnknown }: ControlProps) {
-  const label = dict.facts[def.id as keyof typeof dict.facts];
-  const errorId = `error-${def.id}`;
-  const describedBy = error ? errorId : undefined;
-
-  const errorNode = error ? (
-    <p id={errorId} className="field-error" role="alert">
-      {dict.errors[error as keyof typeof dict.errors]}
-    </p>
-  ) : null;
-
-  if (def.kind === "boolean") {
-    return (
-      <fieldset id={`field-${def.id}`} aria-describedby={describedBy} className={error ? "has-error" : undefined}>
-        <legend>{label}</legend>
-        <Radio name={def.id} value="true" checked={rawValue === "true" && !unknown} onChange={onValue}>
-          {dict.value.true}
-        </Radio>
-        <Radio name={def.id} value="false" checked={rawValue === "false" && !unknown} onChange={onValue}>
-          {dict.value.false}
-        </Radio>
-        <RadioUnknown name={def.id} checked={unknown} onChange={onUnknown} label={dict.intake.dontKnow} />
-        {errorNode}
-      </fieldset>
-    );
-  }
-
-  if (def.kind === "choice") {
-    const options = def.options ?? [];
-    const factOptions = (dict.factOptions as Record<string, Record<string, string>>)[def.id] ?? {};
-    return (
-      <fieldset id={`field-${def.id}`} aria-describedby={describedBy} className={error ? "has-error" : undefined}>
-        <legend>{label}</legend>
-        {options.map((opt) => (
-          <Radio key={opt} name={def.id} value={opt} checked={rawValue === opt && !unknown} onChange={onValue}>
-            {factOptions[opt] ?? opt}
-          </Radio>
-        ))}
-        <RadioUnknown name={def.id} checked={unknown} onChange={onUnknown} label={dict.intake.dontKnow} />
-        {errorNode}
-      </fieldset>
-    );
-  }
-
-  // number and text/date: one input plus a separate "I don't know" checkbox.
-  const inputId = `field-${def.id}`;
-  return (
-    <fieldset className={error ? "has-error" : undefined}>
-      {/* The visible legend also names the input (axe "label" rule; fixed at integration). */}
-      <legend id={`${inputId}-label`}>{label}</legend>
-      {def.kind === "number" ? (
-        <input
-          id={inputId}
-          aria-labelledby={`${inputId}-label`}
-          type="number"
-          step="1"
-          inputMode="numeric"
-          min={def.min}
-          max={def.max}
-          value={unknown ? "" : rawValue}
-          disabled={unknown}
-          aria-describedby={describedBy}
-          onChange={(e) => onValue(e.target.value)}
-        />
-      ) : (
-        <input
-          id={inputId}
-          aria-labelledby={`${inputId}-label`}
-          type="text"
-          maxLength={200}
-          value={unknown ? "" : rawValue}
-          disabled={unknown}
-          aria-describedby={describedBy}
-          onChange={(e) => onValue(e.target.value)}
-        />
-      )}
-      <label className="unknown-checkbox">
-        <input type="checkbox" checked={unknown} onChange={(e) => onUnknown(e.target.checked)} />
-        {dict.intake.dontKnow}
-      </label>
-      {errorNode}
-    </fieldset>
-  );
-}
-
-function Radio({
-  name,
-  value,
-  checked,
-  onChange,
-  children,
-}: {
-  name: string;
-  value: string;
-  checked: boolean;
-  onChange: (value: string) => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="radio-option">
-      <input type="radio" name={name} value={value} checked={checked} onChange={() => onChange(value)} />
-      {children}
-    </label>
-  );
-}
-
-function RadioUnknown({
-  name,
-  checked,
-  onChange,
-  label,
-}: {
-  name: string;
-  checked: boolean;
-  onChange: (on: boolean) => void;
-  label: string;
-}) {
-  return (
-    <label className="radio-option">
-      <input type="radio" name={name} value="unknown" checked={checked} onChange={() => onChange(true)} />
-      {label}
-    </label>
-  );
-}
-
-/** Moves focus to the first field (in form order) that failed validation. */
-function focusFirstInvalid(form: HTMLFormElement | null, defs: readonly FactDef[], errors: FieldErrors): void {
-  if (!form) return;
-  for (const def of defs) {
-    if (!errors[def.id]) continue;
-    const el = form.querySelector<HTMLElement>(`#field-${def.id}`);
-    if (el) {
-      const focusTarget =
-        el.tagName === "FIELDSET" ? el.querySelector<HTMLElement>("input") ?? el : el;
-      focusTarget.focus();
+  function startVoice(): void {
+    const speechWindow = window as typeof window & {
+      SpeechRecognition?: SpeechRecognitionConstructor;
+      webkitSpeechRecognition?: SpeechRecognitionConstructor;
+    };
+    const Recognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
+    if (!Recognition) {
+      setError(t.intake.voiceUnavailable);
       return;
     }
+    const recognition = new Recognition();
+    recognition.lang = lang === "es" ? "es-US" : "en-US";
+    recognition.interimResults = false;
+    recognition.onresult = (event) => setDraft(event.results[0][0].transcript);
+    recognition.onerror = () => setError(t.intake.voiceUnavailable);
+    recognition.onend = () => setListening(false);
+    setListening(true);
+    recognition.start();
   }
+
+  return (
+    <main id="main" className="container conversational-intake">
+      <p className="step-label">{t.intake.stepLabel}</p>
+      <StepHeading>{t.intake.title}</StepHeading>
+      <p className="lede-small">{t.intake.intro}</p>
+
+      <div className="privacy-strip" role="note">
+        <strong>{t.intake.privacyTitle}</strong> {t.intake.fictionalNotice}
+      </div>
+
+      <section className="conversation" aria-label={t.intake.conversationLabel}>
+        <ol className="message-list" aria-live="polite" aria-relevant="additions">
+          {messages.map((message) => (
+            <li key={message.id} className={`message message-${message.speaker}`}>
+              <span className="message-speaker">
+                {message.speaker === "assistant" ? t.intake.bridgeSpeaker : t.intake.youSpeaker}
+              </span>
+              <p>{message.text}</p>
+            </li>
+          ))}
+          {pending ? (
+            <li className="message message-assistant" role="status">
+              <span className="message-speaker">{t.intake.bridgeSpeaker}</span>
+              <p>{t.intake.thinking}</p>
+            </li>
+          ) : null}
+        </ol>
+
+        <form
+          className="composer"
+          onSubmit={(event) => {
+            event.preventDefault();
+            void sendMessage();
+          }}
+        >
+          <label htmlFor="story-message">{t.intake.messageLabel}</label>
+          <textarea
+            id="story-message"
+            rows={4}
+            maxLength={2000}
+            value={draft}
+            placeholder={followUp || t.intake.placeholder}
+            onChange={(event) => setDraft(event.target.value)}
+            disabled={pending}
+          />
+          <div className="composer-actions">
+            <button type="submit" disabled={pending || draft.trim() === ""}>
+              {t.intake.send}
+            </button>
+            <button type="button" className="secondary" onClick={startVoice} disabled={pending || listening}>
+              {listening ? t.intake.listening : t.intake.voice}
+            </button>
+          </div>
+        </form>
+        {error ? <p className="field-error" role="alert">{error}</p> : null}
+        <button type="button" className="demo-story-button" onClick={() => void sendMessage(t.intake.demoStory)} disabled={pending}>
+          {t.intake.useDemo}
+        </button>
+      </section>
+
+      <aside className="understood-panel" aria-labelledby="understood-title">
+        <div className="understood-heading">
+          <div>
+            <p className="eyebrow">{mode === "live" ? t.intake.liveMode : t.intake.demoMode}</p>
+            <h2 id="understood-title">{t.intake.understood}</h2>
+          </div>
+          <span className="count-badge">{facts.length}</span>
+        </div>
+        {facts.length === 0 ? (
+          <p>{t.intake.noFacts}</p>
+        ) : (
+          <dl className="understood-facts">
+            {facts.map((fact) => (
+              <div key={fact.id} data-fact-id={fact.id}>
+                <dt>{t.facts[fact.id as keyof typeof t.facts] ?? fact.id}</dt>
+                <dd>{factValueLabel(t, fact)}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        <p className="understood-note">{t.intake.understoodNote}</p>
+        <button type="button" className="button-primary review-button" onClick={reviewFacts} disabled={facts.length === 0}>
+          {t.intake.review}
+        </button>
+      </aside>
+    </main>
+  );
 }
