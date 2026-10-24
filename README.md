@@ -10,7 +10,10 @@ Repo: https://github.com/KevinIDiaz/bridge-ma
 Tell your story → Confirm facts → View three next actions → See reusable documents → Understand uncertainty / human help → Print bilingual handoff.
 
 ## Status
-Scaffolded. Built: English/Spanish landing page and a placeholder for step 1. Not built yet: intake, fact confirmation, rules engine, action cards, handoff.
+Spec approved (`.kiro/specs/action-graph/`). Shared domain contract in `src/lib/rules/types.ts`. Built so far: English/Spanish landing page and a step 1 placeholder. Not built yet: the rules engine and journey steps 1–6 (see tasks.md).
+
+## Team workflow
+Three teammates work in parallel from the spec commit. Contract files (`src/lib/rules/types.ts`, the fixture schema) change only with team coordination. Suggested ownership is in design.md → Shared contracts and team boundaries.
 
 ## Requirements
 - Node.js 22.12+ (developed on 24 LTS; see `.nvmrc`)
@@ -62,3 +65,6 @@ Domain code in `src/lib/rules` and `src/lib/data` may not import the model adapt
 - [Kiro usage](docs/kiro-usage.md)
 - [Build playbook](docs/bridge-build-playbook.md) (reference only, not scope)
 - Kiro steering: `.kiro/steering/`
+- Kiro skills: `.kiro/skills/` (product-ux-review, verify-demo, review-rule-change, capture-kiro-evidence)
+- Kiro agent: `.kiro/agents/product-critic.md` (read-only UX reviewer, run with `/product-critic`)
+- MCP: `.kiro/settings/mcp.json` (Playwright, Context7)

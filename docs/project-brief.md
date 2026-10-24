@@ -41,3 +41,6 @@ Journey:
 - The six-step journey works end to end in English and Spanish on a public deployment.
 - The app runs fully with no model API key (deterministic fallback).
 - Property tests for the boundaries above pass.
+
+## Status
+Action Graph spec (requirements, design, tasks) approved 2026-10-24. Parallel implementation by three teammates starts from the spec commit.

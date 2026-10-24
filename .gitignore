@@ -28,6 +28,9 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
+# Playwright MCP session output (snapshots, console logs)
+.playwright-mcp/
+
 # Deployment
 .vercel/
 
