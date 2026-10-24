@@ -201,19 +201,239 @@ main:focus {
   margin: 0;
 }
 
+/* ---- Journey steps 3–6 ---- */
+
+.step {
+  padding-bottom: 2rem;
+  overflow-wrap: anywhere;
+}
+
+h1:focus {
+  outline: none;
+}
+
+h1:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 1rem 0 0.25rem;
+}
+
+h4 {
+  font-size: 1rem;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.card-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.action-card,
+.evidence-row,
+.handoff-block {
+  border: 1px solid #c3ccd5;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  background: var(--bg);
+}
+
+.action-card h2 {
+  font-size: 1.35rem;
+}
+
+.rule-result {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.rule-result h3 {
+  margin-top: 0;
+}
+
+.rule-result p {
+  margin: 0.25rem 0;
+}
+
+.explanation {
+  border-left: 4px solid #8796a5;
+  padding-left: 0.75rem;
+}
+
+.dimensions,
+.fact-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.75rem 0;
+}
+
+.dimensions > div,
+.fact-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+}
+
+.dimensions dt,
+.fact-list dt {
+  font-weight: 600;
+}
+
+.dimensions dt::after,
+.fact-list dt::after {
+  content: ":";
+}
+
+.dimensions dd,
+.fact-list dd {
+  margin: 0;
+}
+
+.badge {
+  display: inline-block;
+  margin: 0.25rem 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.badge-synthetic,
+.badge-unverified,
+.badge-fictional {
+  color: #6b4400;
+  background: var(--notice-bg);
+}
+
+.evidence-rows,
+.plain-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.evidence-row h2 {
+  margin-bottom: 0.25rem;
+}
+
+.reuse-note {
+  font-weight: 600;
+  margin: 0.25rem 0;
+}
+
+.uses-label {
+  margin: 0.5rem 0 0;
+}
+
+.handoff-block {
+  margin: 1.5rem 0;
+}
+
+.handoff-meta {
+  color: var(--muted);
+}
+
+.step-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+button.button-primary {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+@media (max-width: 30rem) {
+  .button-secondary {
+    width: 100%;
+  }
+}
+
+/* ---- Print (handoff) ---- */
+
 @media print {
+  .site-header,
+  .lang-list,
   .skip-link,
-  .site-header nav,
-  .button-primary {
-    display: none;
+  .print-control,
+  .site-footer,
+  .step-nav,
+  .step-label {
+    display: none !important;
+  }
+
+  * {
+    color: #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  .handoff-block {
+    border: 0;
+    padding: 0;
+  }
+
+  .handoff-block + .handoff-block {
+    break-before: page;
+  }
+
+  .handoff-block section,
+  .action-summary {
+    break-inside: avoid;
+  }
+
+  a.portal-link::after {
+    content: " (" attr(href) ")";
+    word-break: break-all;
+  }
+
+  details {
+    display: block;
+  }
+
+  details > * {
+    display: block !important;
   }
 
   body {
-    font-size: 12pt;
+    font-size: 11pt;
   }
 
-  .notice {
-    border: 1px solid #000;
-    background: none;
+  .container {
+    max-width: none;
+    padding: 0;
   }
+
+  .notice,
+  .badge {
+    border: 1px solid #000;
+  }
+}
+
+@page {
+  margin: 15mm;
 }

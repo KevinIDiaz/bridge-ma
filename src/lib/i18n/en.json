@@ -13,7 +13,7 @@
   "landing": {
     "purpose": "Bridge MA turns a hard moment into clear, sourced next steps for SNAP, RAFT, and utility shutoff protection in Massachusetts.",
     "disclosureTitle": "This is a demo with fictional data",
-    "disclosureBody": "It uses made-up people and documents. It is not a government website. It does not decide if you qualify, give legal advice, or send applications for you.",
+    "disclosureBody": "It uses made-up people and documents. It is not a government website. It does not decide who can get benefits, give legal advice, or send applications for you.",
     "start": "Start"
   },
   "story": {
@@ -25,13 +25,13 @@
   "intake": {
     "stepLabel": "Step 1 of 6",
     "title": "Tell your story",
-    "intro": "Answer what you can. You can choose \u201cI don\u2019t know\u201d for anything you are not sure about.",
+    "intro": "Answer what you can. You can choose “I don’t know” for anything you are not sure about.",
     "fictionalNotice": "This is fictional demo data. Please do not enter real personal information.",
-    "dontKnow": "I don\u2019t know",
+    "dontKnow": "I don’t know",
     "useDemo": "Use fictional demo story",
     "submit": "Review my answers",
     "errorSummaryTitle": "Please check these answers",
-    "requiredNote": "No field is required. Anything left blank is treated as \u201cunknown.\u201d"
+    "requiredNote": "No field is required. Anything left blank is treated as “unknown.”"
   },
   "confirm": {
     "stepLabel": "Step 2 of 6",
@@ -54,16 +54,16 @@
   },
   "errors": {
     "text_too_long": "Please use 200 characters or fewer.",
-    "number_required": "Please enter a whole number, or choose \u201cI don\u2019t know.\u201d",
+    "number_required": "Please enter a whole number, or choose “I don’t know.”",
     "number_not_whole": "Please enter a whole number with no decimal point.",
     "number_out_of_range": "Please enter a number within the allowed range.",
     "choice_invalid": "Please choose one of the listed options.",
-    "boolean_invalid": "Please choose Yes, No, or \u201cI don\u2019t know.\u201d"
+    "boolean_invalid": "Please choose Yes, No, or “I don’t know.”"
   },
   "value": {
     "true": "Yes",
     "false": "No",
-    "unknown": "I don\u2019t know"
+    "unknown": "I don’t know"
   },
   "confirmation": {
     "confirmed": "Confirmed",
@@ -87,5 +87,203 @@
       "en": "English",
       "es": "Spanish"
     }
+  },
+  "journey": {
+    "stepNav": "Journey steps",
+    "noSession": "We don't have your answers yet. Answers are kept only in this browser tab, so they are cleared when the page reloads.",
+    "startOver": "Go to step 1: Tell your story",
+    "error": "Something went wrong while preparing your next steps, so no results are shown. Please ask a person for help: legal aid, a program office, or a general help line."
+  },
+  "actions": {
+    "stepLabel": "Step 3 of 6",
+    "title": "Your next actions",
+    "intro": "These actions come from demo rules and the answers you confirmed. The most urgent action is first.",
+    "why": "Why this appeared",
+    "facts": "Answers this rule needs",
+    "missing": "Missing",
+    "unconfirmed": "Not yet confirmed",
+    "noneMissing": "No required answers are missing or unconfirmed.",
+    "nextStep": "Next step",
+    "handoff": "Who can help",
+    "order": "Order",
+    "doAfter": "Do this after {program}. {reason}",
+    "evidence": "Documents for this action",
+    "reusedBy": "Also used for: {programs}",
+    "notReused": "Only used for this action.",
+    "sources": "Sources",
+    "ruleLine": "Rule {ruleId}, version {ruleVersion}, fixture version {fixtureVersion}",
+    "deadline": "Deadline",
+    "back": "Back: Confirm your answers",
+    "next": "Next: Documents to gather"
+  },
+  "documents": {
+    "stepLabel": "Step 4 of 6",
+    "title": "Documents to gather",
+    "intro": "Gather each document once. Some documents help with more than one action.",
+    "usedFor": "Used for",
+    "reused": "Used for {count} actions. Gather it once.",
+    "empty": "No documents are listed. Ask a person for help, such as a general help line.",
+    "noUpload": "This app does not upload, scan, or store documents.",
+    "back": "Back: Your next actions",
+    "next": "Next: Questions and who can help"
+  },
+  "help": {
+    "stepLabel": "Step 5 of 6",
+    "title": "What we can't tell yet, and who can help",
+    "cantTellTitle": "Programs we can't tell yet",
+    "noneCantTell": "No program is currently marked \"can't tell yet\".",
+    "missing": "Missing",
+    "unconfirmed": "Not yet confirmed",
+    "none": "None",
+    "syntheticTitle": "Demo rules used",
+    "syntheticRule": "Rule {ruleId}, version {ruleVersion}",
+    "sourcesTitle": "Sources not yet reviewed",
+    "noUnreviewedSources": "All cited sources are reviewed.",
+    "humanHelpTitle": "People who can help",
+    "humanHelpIntro": "Ask for one of these by name. This demo does not list phone numbers or addresses.",
+    "legalAidNotice": "You said you got a Notice to Quit. Ask legal aid any questions about the notice.",
+    "statementsTitle": "Please keep in mind",
+    "back": "Back: Documents to gather",
+    "next": "Next: Print your summary"
+  },
+  "handoff": {
+    "stepLabel": "Step 6 of 6",
+    "title": "Your printable summary",
+    "intro": "This summary is in English and Spanish. You can bring it to a caseworker or a legal aid office.",
+    "print": "Print this summary",
+    "blockTitle": "Summary in English",
+    "confirmedFacts": "Your confirmed answers",
+    "noConfirmedFacts": "No confirmed answers yet.",
+    "unknownFacts": "Answers we still need",
+    "noUnknownFacts": "No required answers are missing.",
+    "factState": {
+      "unknown": "You said you don't know",
+      "missing": "Not answered",
+      "unconfirmed": "Not yet confirmed"
+    },
+    "actions": "Next actions",
+    "evidence": "Documents to gather",
+    "targets": "Who can help",
+    "fixtureVersion": "Fixture version: {version}",
+    "generatedAt": "Created on: {date}",
+    "errorBackToConfirm": "Go back and check your answers",
+    "back": "Back: Questions and who can help"
+  },
+  "status": {
+    "may_match": "may match",
+    "likely_not": "likely does not match",
+    "cant_tell": "can't tell yet"
+  },
+  "dimension": {
+    "status": "Match",
+    "urgency": "Urgency",
+    "sourceFreshness": "Source check",
+    "factConfirmation": "Your answers",
+    "explanationOrigin": "Explanation type"
+  },
+  "dimensionValue": {
+    "urgency": {
+      "urgent": "Urgent",
+      "standard": "Standard",
+      "unknown": "Unknown"
+    },
+    "sourceFreshness": {
+      "reviewed": "Reviewed",
+      "unreviewed": "Not reviewed",
+      "stale": "Out of date"
+    },
+    "factConfirmation": {
+      "all_confirmed": "All confirmed",
+      "has_unconfirmed": "Some not yet confirmed",
+      "has_missing": "Some missing"
+    },
+    "explanationOrigin": {
+      "generated": "Generated",
+      "rule_based": "Rule-based"
+    }
+  },
+  "program": {
+    "snap": "SNAP food benefits",
+    "raft": "RAFT housing help",
+    "utility": "Utility shutoff protection"
+  },
+  "evidence": {
+    "E-ID": "Proof of identity",
+    "E-JOB-LOSS": "Proof of job loss",
+    "E-HOUSEHOLD": "List of household members",
+    "E-NTQ": "Copy of the Notice to Quit",
+    "E-LEASE": "Lease or rent record",
+    "E-UTIL-BILL": "Recent utility bill"
+  },
+  "level": {
+    "required": "Required",
+    "helpful": "Helpful"
+  },
+  "nextStep": {
+    "snap": "Ask the SNAP program office how to apply. Bring the documents listed below.",
+    "raft": "Talk to legal aid about your notice, and ask about RAFT housing help.",
+    "utility": "Call a general help line and ask about protection from a utility shutoff."
+  },
+  "reason": {
+    "R-SNAP": {
+      "may_match": "Your confirmed answers fit the demo rule for SNAP: you live in Massachusetts and recently lost a job.",
+      "likely_not": "At least one of your confirmed answers does not fit the demo rule for SNAP.",
+      "cant_tell": "Some answers the demo rule for SNAP needs are missing or not yet confirmed."
+    },
+    "R-RAFT": {
+      "may_match": "Your confirmed answers fit the demo rule for RAFT: you live in Massachusetts, rent your home, and got a Notice to Quit.",
+      "likely_not": "At least one of your confirmed answers does not fit the demo rule for RAFT.",
+      "cant_tell": "Some answers the demo rule for RAFT needs are missing or not yet confirmed."
+    },
+    "R-UTIL": {
+      "may_match": "Your confirmed answers fit the demo rule for utility shutoff protection: you live in Massachusetts, have a utility account, and got a shutoff notice.",
+      "likely_not": "At least one of your confirmed answers does not fit the demo rule for utility shutoff protection.",
+      "cant_tell": "Some answers the demo rule for utility shutoff protection needs are missing or not yet confirmed."
+    }
+  },
+  "explain": {
+    "snap": {
+      "may_match": "SNAP helps people buy food. Based on a demo rule, your situation may match. A program office makes the real decision.",
+      "likely_not": "SNAP helps people buy food. Based on a demo rule, your situation likely does not match. A program office can still answer questions.",
+      "cant_tell": "SNAP helps people buy food. We can't tell yet because some answers are missing. A program office can help."
+    },
+    "raft": {
+      "may_match": "RAFT can help with housing costs. Based on a demo rule, your situation may match. Legal aid can help you with the notice.",
+      "likely_not": "RAFT can help with housing costs. Based on a demo rule, your situation likely does not match. Legal aid can still answer questions.",
+      "cant_tell": "RAFT can help with housing costs. We can't tell yet because some answers are missing. Legal aid can help."
+    },
+    "utility": {
+      "may_match": "Some rules can protect people from a utility shutoff. Based on a demo rule, your situation may match. A help line can tell you more.",
+      "likely_not": "Some rules can protect people from a utility shutoff. Based on a demo rule, your situation likely does not match. A help line can still answer questions.",
+      "cant_tell": "Some rules can protect people from a utility shutoff. We can't tell yet because some answers are missing. A help line can help."
+    }
+  },
+  "explanation": {
+    "generated": "Generated explanation",
+    "ruleBased": "Rule-based explanation (template)"
+  },
+  "edge": {
+    "housing_first": "Keeping your housing comes first."
+  },
+  "humanHelp": {
+    "legal_aid": "Legal aid",
+    "program_office": "Program office",
+    "general_help_line": "General help line"
+  },
+  "deadline": {
+    "unknown": "No deadline shown. Ask a human helper about timing.",
+    "computed": "{date} (rule {ruleId}, source {sourceId})"
+  },
+  "labels": {
+    "syntheticRule": "Demo rule, not verified against official policy",
+    "unverified": "Unverified",
+    "ruleBasedResult": "Rule-based result",
+    "fictionalDemo": "Fictional demo",
+    "externalOfficialPage": "external official page"
+  },
+  "statements": {
+    "notEligibility": "These results are not an eligibility decision.",
+    "notAgency": "This app is not a government agency, and these results do not come from one.",
+    "noNtqAssessment": "This app does not assess whether a Notice to Quit is valid."
   }
 }
