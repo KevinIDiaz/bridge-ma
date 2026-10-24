@@ -258,7 +258,7 @@ This plan builds a working vertical slice of the six-step Bridge MA journey toda
     - Run `npm run typecheck`, `npm run lint`, `npx vitest --run`, `npm run build`, and `npx playwright test`
     - _Requirements: 3.10, 12.2, 16.13_
     - Done when: all five commands exit with code 0.
-  - [ ] 7.7 Final checkpoint
+  - [x] 7.7 Final checkpoint
     - Ensure all tests pass, ask the user if questions arise.
     - _Requirements: 16.13_
     - Done when: the task 7.6 commands all pass on a clean run.
